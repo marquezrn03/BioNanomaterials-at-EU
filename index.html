@@ -3,73 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>European Landscape: Bio-Based Nanomaterials (Lignin, Cellulose, Chitin)</title>
+    <title>European Landscape: Bio-Based Nanomaterials (Full Data)</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-color: #fcfcfc; --map-bg-color: #f0f3f4; --border-color: #d8dee4;
-            --text-color: #24292e; --title-color: #0366d6; --popup-bg: #ffffff;
-            --popup-border: #e1e4e8; --popup-title-color: #0366d6;
-            --popup-section-header: #586069; --link-color: #0366d6;
-            --placeholder-color: #6a737d; --uni-color-hex: '1e88e5'; --inst-color-hex: '43a047';
-            --comp-color-hex: '8e24aa'; --pilot-color-hex: 'fb8c00'; --network-color-hex: 'd81b60';
-            --other-color-hex: '6a737d';
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            --bg-color: #f8f9fa; --map-bg-color: #e9ecef; --border-color: #ced4da;
+            --text-color: #495057; --title-color: #588157; --popup-bg: #ffffff;
+            --popup-border: #dee2e6; --popup-title-color: #588157; --popup-section-header: #a3b18a;
+            --link-color: #3a5a40; --placeholder-color: #6c757d; --legend-bg: #ffffff; --legend-border: #dee2e6;
+            --uni-color-hex: '42a5f5'; --inst-color-hex: '66bb6a'; --comp-color-hex: 'ab47bc';
+            --pilot-color-hex: 'ffa726'; --network-color-hex: 'ec407a'; --other-color-hex: '8c96a0';
         }
-        body { font-family: 'Lato', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-color); color: var(--text-color); line-height: 1.5; }
-        h1 { margin: 25px 10px 10px 10px; color: var(--title-color); text-align: center; font-weight: 400; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; width: 90%; max-width: 1200px; font-size: 1.8em; }
-        .disclaimer { font-size: 0.8em; color: var(--placeholder-color); width: 90%; max-width: 1200px; text-align: center; margin-bottom: 20px; border: 1px dashed var(--border-color); padding: 8px; background-color: #f6f8fa; }
-        #map { height: 75vh; width: 96%; max-width: 1600px; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 4px 12px rgba(27,31,35,0.1); margin-bottom: 20px; background-color: var(--map-bg-color); }
-        .legend { font-size: 0.85em; padding: 10px 15px; background-color: #fff; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 25px; box-shadow: 0 1px 3px rgba(27,31,35,0.05); }
-        .legend h4 { margin: 0 0 8px 0; font-size: 0.9em; color: var(--popup-section-header); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #f1f1f1; padding-bottom: 4px; }
-        .legend div { margin-bottom: 4px; display: flex; align-items: center;}
-        .legend span { display: inline-block; width: 16px; height: 16px; margin-right: 8px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); }
-        .leaflet-popup-content-wrapper { border-radius: 6px; background-color: var(--popup-bg); border: 1px solid var(--popup-border); box-shadow: 0 3px 8px rgba(27,31,35,0.1); }
-        .leaflet-popup-content { font-size: 0.9em; line-height: 1.55; color: var(--text-color); max-height: 380px; overflow-y: auto; padding: 12px 15px; }
-        .leaflet-popup-content b.popup-title { font-size: 1.1em; color: var(--popup-title-color); font-weight: 600; display: block; margin: -5px -8px 10px -8px; padding: 8px 15px; border-bottom: 1px solid var(--popup-border); background-color: #f6f8fa; }
-        .popup-section { margin-top: 10px; padding-top: 8px; border-top: 1px solid #f1f1f1; }
-        .popup-section:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
-        .popup-section h4 { margin: 8px 0 4px 0; font-size: 0.8em; color: var(--popup-section-header); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+        body { font-family: var(--font-family); margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+        h1 { margin: 30px 10px 15px 10px; color: var(--title-color); text-align: center; font-weight: 600; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; width: 90%; max-width: 1100px; font-size: 2em; letter-spacing: -0.5px; }
+        .disclaimer { font-size: 0.75em; color: var(--placeholder-color); width: 90%; max-width: 1100px; text-align: center; margin-bottom: 25px; border: 1px solid var(--popup-border); padding: 10px; background-color: var(--popup-bg); border-radius: 4px; }
+        #map { height: 78vh; width: 98%; max-width: 1800px; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); margin-bottom: 25px; background-color: var(--map-bg-color); }
+        .legend { font-size: 0.8em; padding: 12px 18px; background-color: var(--legend-bg); border: 1px solid var(--legend-border); border-radius: 8px; margin-bottom: 30px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+        .legend h4 { margin: 0 0 10px 0; font-size: 0.85em; color: var(--popup-section-header); text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid var(--popup-border); padding-bottom: 6px; font-weight: 600; }
+        .legend div { margin-bottom: 5px; display: flex; align-items: center;}
+        .legend span { display: inline-block; width: 15px; height: 15px; margin-right: 10px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); flex-shrink: 0; }
+        .leaflet-control-container .leaflet-control { box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 6px; border: 1px solid var(--border-color); }
+        .leaflet-control-layers { background-color: rgba(255,255,255,0.95); backdrop-filter: blur(5px); border-radius: 6px; padding: 10px; max-height: 65vh; overflow-y: auto; }
+        .leaflet-control-layers-base label, .leaflet-control-layers-overlays label { color: var(--text-color); font-size: 0.9em; display: flex; align-items: center; margin-bottom: 5px; cursor: pointer; font-weight: 500; }
+        .leaflet-control-layers-overlays label span { margin-left: 8px; }
+        .leaflet-control-layers-separator { border-top: 1px solid var(--popup-border); margin: 8px -10px; }
+        .layer-control-icon { width: 14px; height: 14px; margin-right: 0; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); vertical-align: middle; flex-shrink: 0; }
+        .leaflet-popup { transition: opacity 0.3s ease-out, transform 0.3s ease-out; }
+        .leaflet-popup-content-wrapper { border-radius: 8px; background-color: var(--popup-bg); border: 1px solid var(--popup-border); box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; }
+        .leaflet-popup-content { font-size: 0.9em; line-height: 1.6; color: var(--text-color); max-height: 400px; overflow-y: auto; padding: 0; }
+        .leaflet-popup-content b.popup-title { font-size: 1.15em; color: var(--popup-title-color); font-weight: 600; display: block; margin: 0; padding: 12px 18px; border-bottom: 1px solid var(--popup-border); background-color: #f8f9fa; }
+        .popup-section { margin: 0; padding: 10px 18px; border-top: 1px solid #f1f1f1; }
+        .popup-section:first-of-type { border-top: none; }
+        .popup-section h4 { margin: 0 0 5px 0; font-size: 0.75em; color: var(--popup-section-header); font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; }
         .popup-section .content-text { font-size: 0.9em; margin: 0; display: block; }
         .popup-section .content-text.focus { font-weight: 600; color: var(--title-color); }
-        .popup-section .content-text.location { color: #444; }
+        .popup-section .content-text.location { color: #555; }
         .popup-section .content-text.info { color: #333; }
-        .popup-section a { color: var(--link-color); text-decoration: none; font-size: 0.85em; display: inline-block; margin-top: 5px; }
+        .popup-section a { color: var(--link-color); text-decoration: none; font-size: 0.85em; display: inline-block; margin-top: 6px; font-weight: 600; }
         .popup-section a:hover { text-decoration: underline; }
-        .leaflet-tooltip { border-radius: 4px; background-color: rgba(36,41,46,0.9); color: #fff; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.2); padding: 5px 10px; font-size: 0.9em; }
-        .leaflet-control-layers { background-color: #fff; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; box-shadow: 0 1px 4px rgba(27,31,35,0.1); }
-        .leaflet-control-layers-base label, .leaflet-control-layers-overlays label { color: var(--text-color); font-size: 0.95em; display: flex; align-items: center; margin-bottom: 4px; cursor: pointer; }
-        .leaflet-control-layers-overlays label span { margin-left: 8px; }
-        .leaflet-control-layers-separator { border-top: 1px solid #f1f1f1; margin: 8px -10px; }
-        .layer-control-icon { display: inline-block; width: 14px; height: 14px; margin-right: 0; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); vertical-align: middle; flex-shrink: 0; }
-        .marker-cluster div { color: #fff; text-shadow: 1px 1px 1px rgba(0,0,0,0.5); width: 30px; height: 30px; margin-left: 5px; margin-top: 5px; text-align: center; border-radius: 15px; font: 12px 'Lato', sans-serif; line-height: 30px; }
-        .marker-cluster-small { background-color: rgba(67, 160, 71, 0.7); } .marker-cluster-small div { background-color: rgba(27, 94, 32, 0.8); }
-        .marker-cluster-medium { background-color: rgba(251, 140, 0, 0.7); } .marker-cluster-medium div { background-color: rgba(230, 81, 0, 0.8); }
-        .marker-cluster-large { background-color: rgba(216, 27, 96, 0.7); } .marker-cluster-large div { background-color: rgba(136, 14, 79, 0.8); }
-        .leaflet-control-custom { background-color: white; border: 1px solid #ccc; border-radius: 4px; width: 32px; height: 32px; text-align: center; line-height: 32px; cursor: pointer; font-weight: bold; font-size: 1.4em; color: #555; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-        .leaflet-control-custom:hover { background-color: #f4f4f4; color: #222; }
+        .leaflet-popup-tip-container { width: 20px; height: 10px; }
+        .leaflet-popup-tip { box-shadow: none; }
+        .leaflet-tooltip { border-radius: 4px; background-color: rgba(58, 90, 64, 0.9); color: #fff; border: none; box-shadow: 0 1px 4px rgba(0,0,0,0.2); padding: 6px 10px; font-size: 0.9em; font-weight: 500; }
+        .marker-cluster div { color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.6); width: 32px; height: 32px; margin-left: 5px; margin-top: 5px; text-align: center; border-radius: 16px; font: 13px var(--font-family); font-weight: 600; line-height: 32px; }
+        .marker-cluster-small { background-color: rgba(163, 177, 138, 0.8); } .marker-cluster-small div { background-color: rgba(131, 197, 190, 0.9); }
+        .marker-cluster-medium { background-color: rgba(212, 163, 115, 0.8); } .marker-cluster-medium div { background-color: rgba(168, 129, 90, 0.9); }
+        .marker-cluster-large { background-color: rgba(88, 129, 87, 0.8); } .marker-cluster-large div { background-color: rgba(58, 90, 64, 0.9); }
+        .leaflet-control-custom { background-color: white; border: 1px solid var(--border-color); border-radius: 6px; width: 34px; height: 34px; text-align: center; line-height: 34px; cursor: pointer; font-weight: bold; font-size: 1.5em; color: #555; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .leaflet-control-custom:hover { background-color: #f4f4f4; color: #111; }
+        .marker-hover { transform: scale(1.15); z-index: 1000 !important; }
+        .leaflet-marker-icon { transition: transform 0.15s ease-out; }
     </style>
 </head>
 <body>
     <h1>European Landscape: Bio-Based Nanomaterials (Lignin, Cellulose, Chitin)</h1>
     <div class="disclaimer">
-        <strong>Disclaimer:</strong> The field is dynamic; this represents a snapshot.
+        Disclaimer: Map data extracted from provided report. Locations approximate. Requires independent verification.
     </div>
     <div id="map"></div>
     <div class="legend">
-        <h4>Legend (Entity Type)</h4>
-        <div><span style="background-color: #1e88e5;"></span> University</div>
-        <div><span style="background-color: #43a047;"></span> Research Institute</div>
-        <div><span style="background-color: #8e24aa;"></span> Company</div>
-        <div><span style="background-color: #fb8c00;"></span> Pilot Plant / Facility</div>
-        <div><span style="background-color: #d81b60;"></span> Network / Consortium</div>
-        <div><span style="background-color: #6a737d;"></span> Other / Unspecified</div>
+        <h4>Legend</h4>
+        <div><span style="background-color: #42a5f5;"></span> University</div>
+        <div><span style="background-color: #66bb6a;"></span> Research Institute / RTO</div>
+        <div><span style="background-color: #ab47bc;"></span> Company</div>
+        <div><span style="background-color: #ffa726;"></span> Pilot Plant / Facility</div>
+        <div><span style="background-color: #ec407a;"></span> Network / Association</div>
+        <div><span style="background-color: #8c96a0;"></span> Other / Unspecified</div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -77,159 +83,287 @@
     <script>
         const map = L.map('map', { center: [50.0, 10.0], zoom: 5, worldCopyJump: true });
 
-        const osmTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', maxZoom: 18 });
+        const osmTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OSM contributors', maxZoom: 18 });
         const stamenTonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', { attribution: 'Stamen Toner Lite', subdomains: 'abcd', maxZoom: 20, ext: 'png' });
-        const cartoPositron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap contributors &copy; CARTO', subdomains: 'abcd', maxZoom: 20 });
+        const cartoPositron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OSM contributors &copy; CARTO', subdomains: 'abcd', maxZoom: 20 });
         cartoPositron.addTo(map);
 
         const iconSize = [32, 32], iconAnchor = [16, 32], popupAnchor = [0, -34];
-        const createIcon = (hexColor, text) => L.icon({ iconUrl: `https://placehold.co/${iconSize[0]}x${iconSize[1]}/${hexColor}/FFFFFF?text=${encodeURIComponent(text)}`, iconSize: iconSize, iconAnchor: iconAnchor, popupAnchor: popupAnchor });
+        const createIcon = (hexColor, text) => L.icon({ iconUrl: `https://placehold.co/${iconSize[0]}x${iconSize[1]}/${hexColor}/FFFFFF?text=${encodeURIComponent(text)}&font=lato`, iconSize: iconSize, iconAnchor: iconAnchor, popupAnchor: popupAnchor });
         const icons = {
-            university: createIcon('1e88e5', 'UNI'), institute: createIcon('43a047', 'INST'),
-            company: createIcon('8e24aa', 'CO'), pilot_plant: createIcon('fb8c00', 'PILOT'),
-            network: createIcon('d81b60', 'NET'), other: createIcon('6a737d', '?')
+            university: createIcon('42a5f5', 'UNI'), institute: createIcon('66bb6a', 'INST'),
+            company: createIcon('ab47bc', 'CO'), pilot_plant: createIcon('ffa726', 'PILOT'),
+            network: createIcon('ec407a', 'NET'), other: createIcon('8c96a0', '?')
         };
 
-        const bioNanoEntities = [
-             { name: "University of Cambridge", type: "University", city: "Cambridge", country: "UK", lat: 52.20, lon: 0.12, focus: ["Materials Science", "Nanotech"], keyInfo: "#1 Materials Science Europe, #1 Nanotech UK.", iconType: 'university' },
-             { name: "University of Manchester", type: "University", city: "Manchester", country: "UK", lat: 53.46, lon: -2.23, focus: ["Nanotech", "Advanced Materials"], keyInfo: "#2 Nanotech UK. MSc Advanced Materials.", iconType: 'university' },
-             { name: "Imperial College London", type: "University", city: "London", country: "UK", lat: 51.50, lon: -0.17, focus: ["Nanotech"], keyInfo: "#3 Nanotech UK.", iconType: 'university' },
-             { name: "University of Oxford", type: "University", city: "Oxford", country: "UK", lat: 51.75, lon: -1.25, focus: ["Nanotech"], keyInfo: "#4 Nanotech UK.", iconType: 'university' },
-             { name: "University of Sheffield", type: "University", city: "Sheffield", country: "UK", lat: 53.38, lon: -1.47, focus: ["Nanotech"], keyInfo: "#7 Nanotech UK.", iconType: 'university' },
-             { name: "University of Southampton", type: "University", city: "Southampton", country: "UK", lat: 50.93, lon: -1.39, focus: ["Nanotech"], keyInfo: "#8 Nanotech UK.", iconType: 'university' },
-             { name: "University of Edinburgh", type: "University", city: "Edinburgh", country: "UK", lat: 55.94, lon: -3.18, focus: ["General Biobased"], keyInfo: "BIOMAC partner (UEDIN PL8).", iconType: 'university' },
-             { name: "Manchester Metropolitan University", type: "University", city: "Manchester", country: "UK", lat: 53.47, lon: -2.24, focus: ["Advanced Materials"], keyInfo: "Offers MSc Advanced Materials.", iconType: 'university' },
-             { name: "CelluComp", type: "Company", city: "Burntisland", country: "UK", lat: 56.06, lon: -3.23, focus: ["Cellulose (CNC)"], keyInfo: "Identified in nanocrystalline cellulose market.", iconType: 'company' },
-             { name: "Lixea", type: "Company", city: "London (HQ?)", country: "UK", lat: 51.51, lon: -0.13, focus: ["Lignin", "Cellulose", "Biomass Processing"], keyInfo: "Ionic liquid process. Pilot plant in Sweden.", iconType: 'company' },
-             { name: "ETH Zurich", type: "University", city: "Zurich", country: "CH", lat: 47.37, lon: 8.54, focus: ["Materials Science", "Nanotech", "Cellulose", "Lignin"], keyInfo: "#2 Materials Science Europe. Prof. Ingo Burgert (Wood Materials Science).", iconType: 'university' },
-             { name: "EPFL Lausanne", type: "University", city: "Lausanne", country: "CH", lat: 46.52, lon: 6.56, focus: ["Nanotech"], keyInfo: "#1 Nanotech CH.", iconType: 'university' },
-             { name: "University of Basel", type: "University", city: "Basel", country: "CH", lat: 47.55, lon: 7.59, focus: ["Nanotech"], keyInfo: "#3 Nanotech CH.", iconType: 'university' },
-             { name: "Empa", type: "Institute", city: "Dübendorf/St. Gallen", country: "CH", lat: 47.39, lon: 8.61, focus: ["Cellulose", "Lignin", "Wood Materials"], keyInfo: "Cellulose & Wood Materials Lab (Dr. Nyström). LCNFs, aerogels, 3D printing.", iconType: 'institute' },
-             { name: "Clariant", type: "Company", city: "Muttenz", country: "CH", lat: 47.53, lon: 7.64, focus: ["Chemicals"], keyInfo: "Specialty chemicals.", iconType: 'company' },
-             { name: "Karlsruhe Institute of Technology (KIT)", type: "University", city: "Karlsruhe", country: "DE", lat: 49.01, lon: 8.40, focus: ["Materials Science", "Nanotech", "Cellulose", "Lignin"], keyInfo: "#3 Materials Science Europe. Prof. Behrens (NPs), Prof. Meier (Sustainable Polymers), Prof. Holtmann (Biotech).", iconType: 'university' },
-             { name: "RWTH Aachen", type: "University", city: "Aachen", country: "DE", lat: 50.77, lon: 6.08, focus: ["Nanotech", "Biobased Materials"], keyInfo: "#4 Nanotech DE. Part of AMIBM.", iconType: 'university' },
-             { name: "University of Munich (LMU/TUM)", type: "University", city: "Munich", country: "DE", lat: 48.14, lon: 11.57, focus: ["Nanotech"], keyInfo: "#6 Nanotech DE. Hochschule Muenchen (MSc Micro/Nano).", iconType: 'university' },
-             { name: "University of Freiburg", type: "University", city: "Freiburg", country: "DE", lat: 47.99, lon: 7.84, focus: ["Nanotech"], keyInfo: "#10 Nanotech DE.", iconType: 'university' },
-             { name: "Free University of Berlin", type: "University", city: "Berlin", country: "DE", lat: 52.45, lon: 13.29, focus: ["Nanotech"], keyInfo: "#11 Nanotech DE.", iconType: 'university' },
-             { name: "University of Stuttgart", type: "University", city: "Stuttgart", country: "DE", lat: 48.78, lon: 9.18, focus: ["Nanotech"], keyInfo: "#36 Nanotech DE.", iconType: 'university' },
-             { name: "PFH Private University", type: "University", city: "Göttingen", country: "DE", lat: 51.54, lon: 9.93, focus: ["Composites"], keyInfo: "MSc Lightweight Engineering & Composites.", iconType: 'university' },
-             { name: "University of Bayreuth", type: "University", city: "Bayreuth", country: "DE", lat: 49.93, lon: 11.58, focus: ["Chitin/Chitosan"], keyInfo: "Prof. Anayancy Osorio-Madrazo (EUCHIS Secretary).", iconType: 'university' },
-             { name: "Universität Siegen", type: "University", city: "Siegen", country: "DE", lat: 50.88, lon: 8.02, focus: ["Chitin/Chitosan"], keyInfo: "Prof. Hans Merzendorfer (EUCHIS Asst. Secretary).", iconType: 'university' },
-             { name: "Universität Münster", type: "University", city: "Münster", country: "DE", lat: 51.96, lon: 7.62, focus: ["Chitin/Chitosan"], keyInfo: "Prof. Bruno Moerschbacher (EUCHIS Asst. Treasurer).", iconType: 'university' },
-             { name: "Fraunhofer WKI", type: "Institute", city: "Braunschweig", country: "DE", lat: 52.27, lon: 10.52, focus: ["Cellulose", "Composites", "Wood Research"], keyInfo: "Wood Research. BIOMAC (PL12). ValBio-3D.", iconType: 'institute' },
-             { name: "Fraunhofer IAP", type: "Institute", city: "Potsdam", country: "DE", lat: 52.39, lon: 13.06, focus: ["Cellulose", "Lignin", "Chitin", "Polysaccharides"], keyInfo: "Polysaccharide Chemistry. MFC/NFC production.", iconType: 'institute' },
-             { name: "Fraunhofer IVV", type: "Institute", city: "Freising", country: "DE", lat: 48.40, lon: 11.74, focus: ["Cellulose", "Packaging"], keyInfo: "Process Engineering & Packaging. Nanocellulose barrier coatings (CoatNanoCell).", iconType: 'institute' },
-             { name: "Fraunhofer IBMT", type: "Institute", city: "St. Ingbert", country: "DE", lat: 49.28, lon: 7.11, focus: ["Nanotoxicology", "Biomedical"], keyInfo: "Biomedical Engineering. Nanocellulose safety (NanoCELL).", iconType: 'institute' },
-             { name: "Leibniz Institute for Agricultural Engineering and Bioeconomy (ATB)", type: "Institute", city: "Potsdam", country: "DE", lat: 52.38, lon: 13.07, focus: ["Biomass Processing"], keyInfo: "BIOMAC partner (PL7).", iconType: 'institute' },
-             { name: "Aachen-Maastricht Institute for Biobased Materials (AMIBM)", type: "Institute", city: "Geleen (NL) / Aachen (DE)", country: "DE/NL", lat: 50.97, lon: 5.83, focus: ["Biobased Materials"], keyInfo: "Cross-border institute (Maastricht Uni, RWTH Aachen, Fraunhofer IME).", iconType: 'institute' },
-             { name: "BASF SE", type: "Company", city: "Ludwigshafen", country: "DE", lat: 49.48, lon: 8.43, focus: ["Chemicals"], keyInfo: "Global chemical company. Pulp & Paper chemicals.", iconType: 'company' },
-             { name: "Evonik", type: "Company", city: "Essen", country: "DE", lat: 51.45, lon: 7.01, focus: ["Chemicals"], keyInfo: "Specialty chemicals.", iconType: 'company' },
-             { name: "Heppe Medical Chitosan GmbH", type: "Company", city: "Halle (Saale)", country: "DE", lat: 51.48, lon: 11.97, focus: ["Chitin/Chitosan"], keyInfo: "Medical-grade chitosan producer. EUCHIS Treasurer (Dr. Richter).", iconType: 'company' },
-             { name: "PFI (Prüf- und Forschungsinstitut Pirmasens)", type: "Institute", city: "Pirmasens", country: "DE", lat: 49.20, lon: 7.60, focus: ["Testing", "Research", "Composites?"], keyInfo: "Mentioned re: ValBio-3D project (likely partner).", iconType: 'institute' },
-             { name: "Linkoping University", type: "University", city: "Linköping", country: "SE", lat: 58.39, lon: 15.57, focus: ["Materials Science", "Nanotech"], keyInfo: "#4 Materials Science Europe, #1 Nanotech SE.", iconType: 'university' },
-             { name: "KTH Royal Institute of Technology", type: "University", city: "Stockholm", country: "SE", lat: 59.35, lon: 18.07, focus: ["Nanotech"], keyInfo: "#2 Nanotech SE.", iconType: 'university' },
-             { name: "Chalmers University of Technology", type: "University", city: "Gothenburg", country: "SE", lat: 57.69, lon: 11.97, focus: ["Nanotech", "Materials Engineering"], keyInfo: "#3 Nanotech SE. MSc Nanotechnology, Materials Engineering.", iconType: 'university' },
-             { name: "Lund University", type: "University", city: "Lund", country: "SE", lat: 55.71, lon: 13.20, focus: ["Nanotech"], keyInfo: "#4 Nanotech SE.", iconType: 'university' },
-             { name: "Luleå University of Technology (LTU)", type: "University", city: "Luleå", country: "SE", lat: 65.61, lon: 22.14, focus: ["Lignin", "Wood Chemistry", "Biomass Processing"], keyInfo: "BIOMAC partner (PL1). Research on lignin extraction.", iconType: 'university' },
-             { name: "RISE Research Institutes of Sweden", type: "Institute", city: "Stockholm / Örnsköldsvik / etc.", country: "SE", lat: 59.33, lon: 18.06, focus: ["Lignin", "Cellulose (CNF/CNC)"], keyInfo: "LignoBoost/LignoDemo. Nanocellulose pilot plants (MFC/CNC). BIOMAC (PL2).", iconType: 'institute' },
-             { name: "RISE Processum", type: "Institute", city: "Örnsköldsvik", country: "SE", lat: 63.29, lon: 18.71, focus: ["Biorefinery"], keyInfo: "Biorefinery R&D. BIOMAC partner.", iconType: 'institute' },
-             { name: "LignoCity", type: "Pilot Plant", city: "Bäckhammar", country: "SE", lat: 59.16, lon: 14.13, focus: ["Lignin"], keyInfo: "Open testbed for lignin valorization. Hosts RISE & Lixea pilot.", iconType: 'pilot_plant' },
-             { name: "MoRe Research", type: "Company", city: "Örnsköldsvik", country: "SE", lat: 63.29, lon: 18.72, focus: ["Cellulose (CNC)", "Forest Products"], keyInfo: "R&D company. Partner in new CNC pilot plant.", iconType: 'company' },
-             { name: "Cellink", type: "Company", city: "Gothenburg", country: "SE", lat: 57.70, lon: 11.98, focus: ["Bioprinting"], keyInfo: "3D Bioprinting technology.", iconType: 'company' },
-             { name: "Northvolt", type: "Company", city: "Stockholm (HQ) / Skellefteå (Plant)", country: "SE", lat: 64.75, lon: 20.95, focus: ["Batteries", "Lignin (user)"], keyInfo: "Battery manufacturer. Partnering with Stora Enso on Lignode®.", iconType: 'company' },
-             { name: "Holmen AB", type: "Company", city: "Stockholm", country: "SE", lat: 59.33, lon: 18.07, focus: ["Forest Products", "Cellulose"], keyInfo: "Partner in nanocellulose pilot plant.", iconType: 'company' },
-             { name: "IsoTimber / Moelven", type: "Company", city: "Various", country: "SE/NO", lat: 60.0, lon: 15.0, focus: ["Construction", "Lignin (user)"], keyInfo: "Using NeoLigno® binder.", iconType: 'company' },
-             { name: "Delft University of Technology (TU Delft)", type: "University", city: "Delft", country: "NL", lat: 52.00, lon: 4.37, focus: ["Nanotech"], keyInfo: "#1 Nanotech NL.", iconType: 'university' },
-             { name: "University of Groningen", type: "University", city: "Groningen", country: "NL", lat: 53.22, lon: 6.56, focus: ["Nanoscience"], keyInfo: "#2 Nanotech NL. MSc Nanoscience. Zernike Institute.", iconType: 'university' },
-             { name: "University of Utrecht", type: "University", city: "Utrecht", country: "NL", lat: 52.09, lon: 5.12, focus: ["Nanotech"], keyInfo: "#4 Nanotech NL.", iconType: 'university' },
-             { name: "Wageningen University & Research (WUR)", type: "University", city: "Wageningen", country: "NL", lat: 51.98, lon: 5.66, focus: ["Lignin", "Cellulose", "Biobased Materials"], keyInfo: "Major player. WFBR (Food & Biobased Research - G. van Erven).", iconType: 'university' },
-             { name: "Maastricht University", type: "University", city: "Maastricht", country: "NL", lat: 50.85, lon: 5.69, focus: ["Biobased Materials"], keyInfo: "MSc Biobased Materials. Part of AMIBM.", iconType: 'university' },
-             { name: "Nouryon", type: "Company", city: "Amsterdam", country: "NL", lat: 52.37, lon: 4.89, focus: ["Chemicals"], keyInfo: "Specialty chemicals (ex-AkzoNobel). Cellulose derivatives.", iconType: 'company' },
-             { name: "Avantium", type: "Company", city: "Amsterdam", country: "NL", lat: 52.37, lon: 4.89, focus: ["Biobased Chemicals"], keyInfo: "Developing FDCA from sugars.", iconType: 'company' },
-             { name: "University of Paris-Saclay", type: "University", city: "Paris area", country: "FR", lat: 48.70, lon: 2.17, focus: ["Nanotech"], keyInfo: "#1 Nanotech FR.", iconType: 'university' },
-             { name: "Claude Bernard University Lyon 1", type: "University", city: "Lyon", country: "FR", lat: 45.78, lon: 4.87, focus: ["Chitin/Chitosan", "Polymers"], keyInfo: "#2 Nanotech FR. Prof. Laurent David (EUCHIS President).", iconType: 'university' },
-             { name: "Grenoble Alpes University", type: "University", city: "Grenoble", country: "FR", lat: 45.19, lon: 5.76, focus: ["Nanotech", "Cellulose", "Packaging"], keyInfo: "#4 Nanotech FR. Close ties to CERMAV (packaging focus).", iconType: 'university' },
-             { name: "University of Bordeaux", type: "University", city: "Bordeaux", country: "FR", lat: 44.83, lon: -0.58, focus: ["Nanotech"], keyInfo: "#5 Nanotech FR.", iconType: 'university' },
-             { name: "CERMAV (CNRS)", type: "Institute", city: "Grenoble", country: "FR", lat: 45.19, lon: 5.77, focus: ["Cellulose (CNC/CNF)", "Packaging"], keyInfo: "World-renowned center. Dr. Bras (packaging/printing), Dr. Dufresne (composites), Dr. Putaux (microscopy). Strong focus on nanocellulose applications.", iconType: 'institute' },
-             { name: "France Chitin", type: "Company", city: "Orange", country: "FR", lat: 44.14, lon: 4.81, focus: ["Chitin/Chitosan"], keyInfo: "Chitin/Chitosan producer.", iconType: 'company' },
-             { name: "University of Bologna", type: "University", city: "Bologna", country: "IT", lat: 44.49, lon: 11.34, focus: ["Nanotech"], keyInfo: "#1 Nanotech IT.", iconType: 'university' },
-             { name: "Sapienza University of Rome", type: "University", city: "Rome", country: "IT", lat: 41.90, lon: 12.51, focus: ["Nanotech"], keyInfo: "#2 Nanotech IT.", iconType: 'university' },
-             { name: "Politecnico di Torino", type: "University", city: "Turin", country: "IT", lat: 45.06, lon: 7.66, focus: ["Nanotech"], keyInfo: "MSc Nanotechnologies.", iconType: 'university' },
-             { name: "University of Milano - Bicocca", type: "University", city: "Milan", country: "IT", lat: 45.51, lon: 9.21, focus: ["Materials Science", "Nanotech"], keyInfo: "MSc Materials Science/Nanotech.", iconType: 'university' },
-             { name: "Ca' Foscari University of Venice", type: "University", city: "Venice", country: "IT", lat: 45.43, lon: 12.32, focus: ["Bio/Nanomaterials"], keyInfo: "MA Bio/Nanomaterials.", iconType: 'university' },
-             { name: "University of Pavia", type: "University", city: "Pavia", country: "IT", lat: 45.18, lon: 9.15, focus: ["Chitin/Chitosan", "Biomedical"], keyInfo: "Prof. Carla Marcella Caramella (EUCHIS Board). Pharmaceutical technology.", iconType: 'university' },
-             { name: "University of Urbino Carlo Bo", type: "University", city: "Urbino", country: "IT", lat: 43.72, lon: 12.63, focus: ["Chitin/Chitosan", "Biomedical"], keyInfo: "Dr. Luca Casettari (EUCHIS Board). Biomaterials, Drug Delivery.", iconType: 'university' },
-             { name: "University of Padua", type: "University", city: "Padua", country: "IT", lat: 45.41, lon: 11.88, focus: ["General Biobased"], keyInfo: "BIOMAC partner.", iconType: 'university' },
-             { name: "JRC Nanobiotechnology Laboratory", type: "Institute", city: "Ispra", country: "IT", lat: 45.81, lon: 8.63, focus: ["Nano/Bio Characterization"], keyInfo: "EU Commission Joint Research Centre. Open access.", iconType: 'institute' },
-             { name: "Novamont SPA", type: "Company", city: "Novara", country: "IT", lat: 45.44, lon: 8.62, focus: ["Bioplastics"], keyInfo: "Leading bioplastics company. BIOMAC validator.", iconType: 'company' },
-             { name: "Diad Group SPRL", type: "Company", city: "Unknown", country: "IT", lat: 42.83, lon: 12.83, focus: ["Unknown"], keyInfo: "BIOMAC Industrial Validator.", iconType: 'company' },
-             { name: "Kemira Production", type: "Pilot Plant", city: "San Giorgio di Nogaro", country: "IT", lat: 45.80, lon: 13.22, focus: ["Chemicals"], keyInfo: "Biomass-balanced polyacrylamide production.", iconType: 'pilot_plant' },
-             { name: "Autonomous University of Madrid (UAM)", type: "University", city: "Madrid", country: "ES", lat: 40.54, lon: -3.69, focus: ["Nanotech"], keyInfo: "#1 Nanotech ES.", iconType: 'university' },
-             { name: "Complutense University of Madrid (UCM)", type: "University", city: "Madrid", country: "ES", lat: 40.44, lon: -3.72, focus: ["Chitin/Chitosan"], keyInfo: "#2 Nanotech ES. Prof. Inmaculada Aranaz Corral (EUCHIS VP).", iconType: 'university' },
-             { name: "Universitat de Barcelona (UB)", type: "University", city: "Barcelona", country: "ES", lat: 41.38, lon: 2.16, focus: ["Nanoscience/Nanotech"], keyInfo: "MSc Nanoscience/Nanotech.", iconType: 'university' },
-             { name: "Universidad de Valladolid", type: "University", city: "Valladolid", country: "ES", lat: 41.65, lon: -4.72, focus: ["Nanoscience/Nanotech"], keyInfo: "MSc Molecular Nanoscience/Nanotech.", iconType: 'university' },
-             { name: "University of Girona", type: "University", city: "Girona", country: "ES", lat: 41.98, lon: 2.82, focus: ["Cellulose (Nano)", "Polymers"], keyInfo: "LEPAMAP research group known for nanocellulose.", iconType: 'university' },
-             { name: "ICMAB-CSIC", type: "Institute", city: "Barcelona", country: "ES", lat: 41.48, lon: 2.09, focus: ["Materials Science", "Biomimetics"], keyInfo: "Institute of Materials Science of Barcelona.", iconType: 'institute' },
-             { name: "ITENE", type: "Institute", city: "Valencia", country: "ES", lat: 39.48, lon: -0.47, focus: ["Cellulose", "Packaging", "Coatings"], keyInfo: "Packaging Institute. BIOMAC Pilot Lines (PL13/14 - NFC/CNC, Coatings).", iconType: 'institute' },
-             { name: "AIMPLAS", type: "Institute", city: "Valencia", country: "ES", lat: 39.48, lon: -0.48, focus: ["Plastics", "Composites", "Biotech"], keyInfo: "Plastics Institute. BIOMAC Pilot Line (PL11 - Compounding). Extensive pilot plants.", iconType: 'institute' },
-             { name: "CINN (CSIC)", type: "Institute", city: "El Entrego, Asturias", country: "ES", lat: 43.29, lon: -5.68, focus: ["Nanomaterials", "Characterization", "Biotesting"], keyInfo: "Nanomaterials & Nanotechnology Research Center.", iconType: 'institute' },
-             { name: "AIMEN", type: "Institute", city: "O Porriño, Galicia", country: "ES", lat: 42.16, lon: -8.62, focus: ["Materials Processing"], keyInfo: "Technological Centre. BIOMAC partner (PL15).", iconType: 'institute' },
-             { name: "CIB Margarita Salas (CSIC)", type: "Institute", city: "Madrid", country: "ES", lat: 40.44, lon: -3.71, focus: ["Biotechnology", "Lignin", "Enzymes"], keyInfo: "Biological Research Center. Known work on lignin-degrading enzymes.", iconType: 'institute' },
-             { name: "Acciona Construcción SA", type: "Company", city: "Madrid", country: "ES", lat: 40.41, lon: -3.70, focus: ["Construction"], keyInfo: "BIOMAC Industrial Validator.", iconType: 'company' },
-             { name: "Eversia Innova", type: "Company", city: "Unknown", country: "ES", lat: 40.41, lon: -3.70, focus: ["Packaging?"], keyInfo: "BIOMAC Industrial Validator.", iconType: 'company' },
-             { name: "Aalto University", type: "University", city: "Espoo", country: "FI", lat: 60.18, lon: 24.83, focus: ["Cellulose", "Lignin", "Chitin", "Mechanochemistry"], keyInfo: "Dept. Bioproducts & Biosystems (Österberg, Rojas, Kostiainen, Kaabel). FinnCERES.", iconType: 'university' },
-             { name: "University of Helsinki", type: "University", city: "Helsinki", country: "FI", lat: 60.17, lon: 24.94, focus: ["Materials Research", "Lignin", "Cellulose"], keyInfo: "MSc Materials Research. LNP/CNF adsorption studies.", iconType: 'university' },
-             { name: "University of Turku", type: "University", city: "Turku", country: "FI", lat: 60.45, lon: 22.28, focus: ["Materials Chemistry"], keyInfo: "MSc Materials Chemistry.", iconType: 'university' },
-             { name: "VTT Technical Research Centre of Finland", type: "Institute", city: "Espoo / Tampere / etc.", country: "FI", lat: 60.18, lon: 24.82, focus: ["Cellulose", "Lignin", "Biomass Processing", "Coatings"], keyInfo: "Leading institute. Nanocellulose & Coating pilot plants (SutCo, CelluloseFilms).", iconType: 'institute' },
-             { name: "FinnCERES Flagship", type: "Network", city: "Espoo / Helsinki", country: "FI", lat: 60.18, lon: 24.83, focus: ["Lignocellulose"], keyInfo: "Joint competence center (Aalto & VTT).", iconType: 'network' },
-             { name: "Stora Enso", type: "Company", city: "Helsinki (HQ)", country: "FI", lat: 60.17, lon: 24.95, focus: ["Lignin", "Cellulose", "Biomaterials"], keyInfo: "Lineo™, NeoLigno®, Lignode®. Sunila Lignode Pilot.", iconType: 'company' },
-             { name: "UPM", type: "Company", city: "Helsinki (HQ)", country: "FI", lat: 60.17, lon: 24.94, focus: ["Cellulose (Nano)", "Biochemicals", "Biomedical"], keyInfo: "UPM Biomedicals (GrowDex®, FibDex®, FibGel™).", iconType: 'company' },
-             { name: "Kemira", type: "Company", city: "Helsinki (HQ)", country: "FI", lat: 60.17, lon: 24.94, focus: ["Chemicals", "Biobased Polymers"], keyInfo: "Pulp & Paper chemicals. Polysaccharide polymers. Biomass-balanced PAM.", iconType: 'company' },
-             { name: "BOKU University Vienna", type: "University", city: "Vienna / Tulln", country: "AT", lat: 48.23, lon: 16.33, focus: ["Lignin", "Cellulose", "Wood Chemistry", "Biorefining"], keyInfo: "Inst. Chemistry of Renewable Resources (Prof. Rosenau). ALICE Facility.", iconType: 'university' },
-             { name: "Lenzing AG", type: "Company", city: "Lenzing", country: "AT", lat: 47.97, lon: 13.60, focus: ["Cellulose Fibers"], keyInfo: "Major producer of Lyocell (TENCEL™), Modal fibers.", iconType: 'company' },
-             { name: "Mondi", type: "Company", city: "Vienna (Group office)", country: "AT", lat: 48.21, lon: 16.37, focus: ["Packaging", "Paper"], keyInfo: "Sustainable paper/packaging solutions.", iconType: 'company' },
-             { name: "KU Leuven", type: "University", city: "Leuven", country: "BE", lat: 50.88, lon: 4.70, focus: ["Polymers", "Materials Science", "Cellulose"], keyInfo: "Strong materials/polymer science groups, cellulose research.", iconType: 'university' },
-             { name: "Ghent University", type: "University", city: "Ghent", country: "BE", lat: 51.05, lon: 3.72, focus: ["Polymers", "Biotechnology", "Materials"], keyInfo: "Notable polymer/materials groups. Close ties to BBEPP.", iconType: 'university' },
-             { name: "Bio Base Europe Pilot Plant (BBEPP)", type: "Pilot Plant", city: "Ghent", country: "BE", lat: 51.09, lon: 3.78, focus: ["Biomass Processing", "Fractionation", "Fermentation"], keyInfo: "Independent pilot facility. BIOMAC (PL5/6 - Pre-treatment).", iconType: 'pilot_plant' },
-             { name: "Solvay", type: "Company", city: "Brussels", country: "BE", lat: 50.85, lon: 4.35, focus: ["Chemicals"], keyInfo: "Multinational chemical company.", iconType: 'company' },
-             { name: "LIST (Luxembourg Institute of Science & Technology)", type: "Institute", city: "Esch-sur-Alzette/Belvaux", country: "LU", lat: 49.50, lon: 5.94, focus: ["Lignin", "Cellulose", "Composites"], keyInfo: "Materials Research & Technology Dept. BIOMAC (PL9/10). Lignin vitrimers, NP composites.", iconType: 'institute' },
-             { name: "Trinity College Dublin (CRANN/AMBER)", type: "University", city: "Dublin", country: "IE", lat: 53.34, lon: -6.25, focus: ["Nanoscience", "Materials", "Bioengineering"], keyInfo: "Leading nanoscience institute. Advanced Microscopy Lab.", iconType: 'university' },
-             { name: "Celignis", type: "Company", city: "Limerick", country: "IE", lat: 52.66, lon: -8.62, focus: ["Biomass Analysis", "Biorefining", "Chitin", "Polysaccharides"], keyInfo: "Biomass analysis & R&D. PERFECOAT, BIONEER projects.", iconType: 'company' },
-             { name: "Smurfit Kappa", type: "Company", city: "Dublin (HQ)", country: "IE", lat: 53.34, lon: -6.26, focus: ["Packaging", "Paper"], keyInfo: "Global paper-based packaging leader.", iconType: 'company' },
-             { name: "Borregaard AS", type: "Company", city: "Sarpsborg", country: "NO", lat: 59.28, lon: 11.11, focus: ["Lignin", "Cellulose (MFC)"], keyInfo: "Advanced biorefinery. Leading producer of Lignosulfonates & MFC (Exilva®).", iconType: 'company' },
-             { name: "NovaMatrix (FMC Corp)", type: "Company", city: "Sandvika", country: "NO", lat: 59.89, lon: 10.53, focus: ["Chitin/Chitosan"], keyInfo: "Chitin/Chitosan producer.", iconType: 'company' },
-             { name: "University of Aveiro", type: "University", city: "Aveiro", country: "PT", lat: 40.64, lon: -8.65, focus: ["Materials Science", "Cellulose", "Biopolymers"], keyInfo: "CICECO - Aveiro Institute of Materials. Known for biopolymer research.", iconType: 'university' },
-             { name: "University of Minho", type: "University", city: "Braga / Guimarães", country: "PT", lat: 41.55, lon: -8.42, focus: ["Polymers", "Biomaterials", "Nanotechnology"], keyInfo: "Strong polymer engineering and biomaterials groups.", iconType: 'university' },
-             { name: "NOVA School of Science and Technology", type: "University", city: "Lisbon area (Caparica)", country: "PT", lat: 38.66, lon: -9.20, focus: ["Materials Science", "Biomaterials", "Nanotech"], keyInfo: "Materials research center (CENIMAT/I3N).", iconType: 'university' },
-             { name: "Technical University of Liberec", type: "University", city: "Liberec", country: "CZ", lat: 50.77, lon: 15.05, focus: ["Nanofibers", "Textiles", "Materials"], keyInfo: "Faculty of Textile Engineering. Known for nanofiber research.", iconType: 'university' },
-             { name: "VSB Ostrava", type: "University", city: "Ostrava", country: "CZ", lat: 49.83, lon: 18.16, focus: ["Materials Engineering", "Nanotech"], keyInfo: "Technical University of Ostrava. Materials engineering focus.", iconType: 'university' },
-             { name: "University of Tartu", type: "University", city: "Tartu", country: "EE", lat: 58.37, lon: 26.72, focus: ["Materials Science", "Physics", "Chemistry"], keyInfo: "Institute of Technology, materials science research.", iconType: 'university' },
-             { name: "Kaunas University of Technology", type: "University", city: "Kaunas", country: "LT", lat: 54.90, lon: 23.95, focus: ["Polymers", "Materials", "Chemical Tech"], keyInfo: "Faculty of Chemical Technology. Polymer/Materials research.", iconType: 'university' },
-             { name: "University of Iceland", type: "University", city: "Reykjavik", country: "IS", lat: 64.14, lon: -21.93, focus: ["Chitin/Chitosan", "Pharmaceutical Sci"], keyInfo: "Prof. Már Másson (EUCHIS VP). Pharmaceutical Sciences.", iconType: 'university' },
-             { name: "Primex", type: "Company", city: "Siglufjörður", country: "IS", lat: 66.15, lon: -18.90, focus: ["Chitin/Chitosan"], keyInfo: "Chitin/Chitosan producer.", iconType: 'company' },
-             { name: "Creative Nano (CNANO)", type: "Company", city: "Athens", country: "GR", lat: 37.98, lon: 23.72, focus: ["Nanolignin", "Nanoparticles"], keyInfo: "SME. BIOMAC partner (PL4). Nanolignin standardization.", iconType: 'company' },
-             { name: "Nanotypos (NNT)", type: "Company", city: "Thessaloniki", country: "GR", lat: 40.64, lon: 22.94, focus: ["Nanomanufacturing", "Printed Electronics"], keyInfo: "SME. BIOMAC partner (PL17).", iconType: 'company' },
-             { name: "AUTH", type: "University", city: "Thessaloniki", country: "GR", lat: 40.63, lon: 22.95, focus: ["Nanomaterials", "Thin Films"], keyInfo: "Aristotle University. BIOMAC Partner (PL3).", iconType: 'university' },
-             { name: "Exelisis IKE", type: "Company", city: "Unknown", country: "GR", lat: 39.0, lon: 22.0, focus: ["Unknown"], keyInfo: "BIOMAC Industrial Validator.", iconType: 'company' },
-             { name: "Danish Technological Institute (DTI)", type: "Institute", city: "Taastrup", country: "DK", lat: 55.65, lon: 12.29, focus: ["Technology", "Materials"], keyInfo: "BIOMAC partner (PL16). Broad technology expertise.", iconType: 'institute' },
-             { name: "AXIA Innovation", type: "Company", city: "Copenhagen?", country: "DK", lat: 55.67, lon: 12.56, focus: ["Innovation Management"], keyInfo: "BIOMAC partner. Focus on market uptake.", iconType: 'company' },
-             { name: "Ohmatex A/S", type: "Company", city: "Skovlunde", country: "DK", lat: 55.72, lon: 12.41, focus: ["Smart Textiles"], keyInfo: "BIOMAC Industrial Validator.", iconType: 'company' },
-             { name: "InnoRenew CoE", type: "Institute", city: "Izola", country: "SI", lat: 45.54, lon: 13.66, focus: ["Renewable Materials", "Lignin", "Sustainable Buildings"], keyInfo: "Renewable materials & sustainable buildings. Hosted PACK-NIN MSCA.", iconType: 'institute' },
-             { name: "University of Maribor", type: "University", city: "Maribor", country: "SI", lat: 46.55, lon: 15.64, focus: ["Polymers", "Materials Engineering"], keyInfo: "Faculty of Chemistry and Chemical Engineering, Faculty of Mechanical Engineering.", iconType: 'university' },
-             { name: "Melodea Ltd.", type: "Company", city: "Rehovot (HQ)", country: "IL", lat: 31.89, lon: 34.81, focus: ["Cellulose (CNC)"], keyInfo: "Active in CNC market. Partnering on CNC pilot plant in Sweden.", iconType: 'company' },
-             { name: "BIOMAC OITB", type: "Network", city: "Europe-wide", country: "EU", lat: 50.85, lon: 4.35, focus: ["Lignin", "Cellulose", "Pilot Lines"], keyInfo: "Open Innovation Test Bed for Nano-Bio Materials. 17 Pilot Lines.", iconType: 'network' },
-             { name: "EUCHIS", type: "Network", city: "Europe-wide", country: "EU", lat: 45.78, lon: 4.87, focus: ["Chitin/Chitosan"], keyInfo: "European Chitin Society. Key academic leaders involved.", iconType: 'network' },
-             { name: "E-MRS", type: "Network", city: "Strasbourg (HQ)", country: "FR", lat: 48.58, lon: 7.75, focus: ["Materials Science"], keyInfo: "European Materials Research Society. Facilitates networking.", iconType: 'network' },
-             { name: "CERIC-ERIC", type: "Network", city: "Trieste (HQ)", country: "IT", lat: 45.67, lon: 13.78, focus: ["Research Infrastructure"], keyInfo: "Central European Research Infrastructure Consortium. Open access.", iconType: 'network' },
-             { name: "NFFA-Europe", type: "Network", city: "Trieste (Coord.)", country: "IT", lat: 45.67, lon: 13.78, focus: ["Nanoscale Research"], keyInfo: "Platform for free access to nano research tools.", iconType: 'network' },
-             { name: "EUTINN", type: "Network", city: "Europe-wide", country: "EU", lat: 48.85, lon: 2.35, focus: ["Nanomaterials", "Nanotech"], keyInfo: "European University of Technology Institute of Nanomaterials & Nanotechnologies.", iconType: 'network' }
+        // --- Comprehensive Data Source (Extracted from Full Report) ---
+        const entitiesData = [
+            // UK Universities
+            { name: "University of Cambridge", type: "University", city: "Cambridge", country: "UK", lat: 52.20, lon: 0.12, focus: ["Materials Science", "Nanotech"], keyInfo: "#1 Materials Science Europe, #1 Nanotech UK.", iconType: 'university' },
+            { name: "University of Manchester", type: "University", city: "Manchester", country: "UK", lat: 53.46, lon: -2.23, focus: ["Nanotech", "Advanced Materials"], keyInfo: "#2 Nanotech UK. MSc Advanced Materials.", iconType: 'university' },
+            { name: "Imperial College London", type: "University", city: "London", country: "UK", lat: 51.50, lon: -0.17, focus: ["Nanotech"], keyInfo: "#3 Nanotech UK.", iconType: 'university' },
+            { name: "University of Oxford", type: "University", city: "Oxford", country: "UK", lat: 51.75, lon: -1.25, focus: ["Nanotech"], keyInfo: "#4 Nanotech UK.", iconType: 'university' },
+            { name: "University of Sheffield", type: "University", city: "Sheffield", country: "UK", lat: 53.38, lon: -1.47, focus: ["Nanotech"], keyInfo: "#7 Nanotech UK.", iconType: 'university' },
+            { name: "University of Southampton", type: "University", city: "Southampton", country: "UK", lat: 50.93, lon: -1.39, focus: ["Nanotech"], keyInfo: "#8 Nanotech UK.", iconType: 'university' },
+            { name: "University of Edinburgh", type: "University", city: "Edinburgh", country: "UK", lat: 55.94, lon: -3.18, focus: ["General Biobased"], keyInfo: "BIOMAC partner (UEDIN PL8).", iconType: 'university' },
+            { name: "Manchester Metropolitan University", type: "University", city: "Manchester", country: "UK", lat: 53.47, lon: -2.24, focus: ["Advanced Materials"], keyInfo: "Offers MSc Advanced Materials.", iconType: 'university' },
+            { name: "Brunel University", type: "University", city: "London", country: "UK", lat: 51.53, lon: -0.47, focus: ["Biomaterials", "Plastics"], keyInfo: "Partner in RECOVER project.", iconType: 'university' },
+
+            // CH Universities & Institutes
+            { name: "ETH Zurich", type: "University", city: "Zurich", country: "CH", lat: 47.37, lon: 8.54, focus: ["Materials Science", "Nanotech", "Cellulose", "Lignin", "Wood Materials"], keyInfo: "#2 Materials Science Europe. Prof. Ingo Burgert (Wood Materials Science).", iconType: 'university' },
+            { name: "EPFL Lausanne", type: "University", city: "Lausanne", country: "CH", lat: 46.52, lon: 6.56, focus: ["Nanotech"], keyInfo: "#1 Nanotech CH.", iconType: 'university' },
+            { name: "University of Basel", type: "University", city: "Basel", country: "CH", lat: 47.55, lon: 7.59, focus: ["Nanotech"], keyInfo: "#3 Nanotech CH.", iconType: 'university' },
+            { name: "Empa", type: "Institute", city: "Dübendorf/St. Gallen", country: "CH", lat: 47.39, lon: 8.61, focus: ["Cellulose", "Lignin", "Wood Materials", "Aerogels", "3D Printing"], keyInfo: "Cellulose & Wood Materials Lab (Dr. Nyström). LCNFs, aerogels, 3D printing.", iconType: 'institute' },
+
+            // DE Universities & Institutes
+            { name: "Karlsruhe Institute of Technology (KIT)", type: "University", city: "Karlsruhe", country: "DE", lat: 49.01, lon: 8.40, focus: ["Materials Science", "Nanotech", "Cellulose", "Lignin", "Sustainable Polymers", "Catalysis"], keyInfo: "#3 Materials Science Europe. Prof. Behrens (NPs), Prof. Meier (Sustainable Polymers), Prof. Holtmann (Biotech).", iconType: 'university' },
+            { name: "RWTH Aachen", type: "University", city: "Aachen", country: "DE", lat: 50.77, lon: 6.08, focus: ["Nanotech", "Biobased Materials"], keyInfo: "#4 Nanotech DE. Part of AMIBM.", iconType: 'university' },
+            { name: "University of Munich (LMU/TUM)", type: "University", city: "Munich", country: "DE", lat: 48.14, lon: 11.57, focus: ["Nanotech"], keyInfo: "#6 Nanotech DE. Also includes TU Munich (CHI-BIO partner).", iconType: 'university' },
+            { name: "University of Freiburg", type: "University", city: "Freiburg", country: "DE", lat: 47.99, lon: 7.84, focus: ["Nanotech"], keyInfo: "#10 Nanotech DE.", iconType: 'university' },
+            { name: "Free University of Berlin", type: "University", city: "Berlin", country: "DE", lat: 52.45, lon: 13.29, focus: ["Nanotech"], keyInfo: "#11 Nanotech DE.", iconType: 'university' },
+            { name: "University of Stuttgart", type: "University", city: "Stuttgart", country: "DE", lat: 48.78, lon: 9.18, focus: ["Nanotech"], keyInfo: "#36 Nanotech DE.", iconType: 'university' },
+            { name: "Hochschule Muenchen", type: "University", city: "Munich", country: "DE", lat: 48.15, lon: 11.55, focus: ["Micro/Nanotechnology"], keyInfo: "Offers MSc Micro- and Nanotechnology.", iconType: 'university' },
+            { name: "PFH Private University", type: "University", city: "Göttingen", country: "DE", lat: 51.54, lon: 9.93, focus: ["Composites"], keyInfo: "MSc Lightweight Engineering & Composites.", iconType: 'university' },
+            { name: "University of Bayreuth", type: "University", city: "Bayreuth", country: "DE", lat: 49.93, lon: 11.58, focus: ["Chitin/Chitosan"], keyInfo: "Prof. Anayancy Osorio-Madrazo (EUCHIS Secretary).", iconType: 'university' },
+            { name: "Universität Siegen", type: "University", city: "Siegen", country: "DE", lat: 50.88, lon: 8.02, focus: ["Chitin/Chitosan"], keyInfo: "Prof. Hans Merzendorfer (EUCHIS Asst. Secretary).", iconType: 'university' },
+            { name: "Universität Münster", type: "University", city: "Münster", country: "DE", lat: 51.96, lon: 7.62, focus: ["Chitin/Chitosan"], keyInfo: "Prof. Bruno Moerschbacher (EUCHIS Asst. Treasurer).", iconType: 'university' },
+            { name: "Albstadt-Sigmaringen University", type: "University", city: "Albstadt", country: "DE", lat: 48.21, lon: 9.02, focus: ["Biomaterials", "Plastics"], keyInfo: "Partner in RECOVER project.", iconType: 'university' },
+            { name: "Fraunhofer WKI", type: "Institute", city: "Braunschweig", country: "DE", lat: 52.27, lon: 10.52, focus: ["Cellulose", "Composites", "Wood Research"], keyInfo: "Wood Research. BIOMAC (PL12). ValBio-3D.", iconType: 'institute' },
+            { name: "Fraunhofer IAP", type: "Institute", city: "Potsdam", country: "DE", lat: 52.39, lon: 13.06, focus: ["Cellulose", "Lignin", "Chitin", "Polysaccharides"], keyInfo: "Polysaccharide Chemistry. MFC/NFC production.", iconType: 'institute' },
+            { name: "Fraunhofer IVV", type: "Institute", city: "Freising", country: "DE", lat: 48.40, lon: 11.74, focus: ["Cellulose", "Packaging"], keyInfo: "Process Engineering & Packaging. Nanocellulose barrier coatings (CoatNanoCell).", iconType: 'institute' },
+            { name: "Fraunhofer IBMT", type: "Institute", city: "St. Ingbert", country: "DE", lat: 49.28, lon: 7.11, focus: ["Nanotoxicology", "Biomedical"], keyInfo: "Biomedical Engineering. Nanocellulose safety (NanoCELL).", iconType: 'institute' },
+            { name: "Leibniz Institute for Agricultural Engineering and Bioeconomy (ATB)", type: "Institute", city: "Potsdam", country: "DE", lat: 52.38, lon: 13.07, focus: ["Biomass Processing"], keyInfo: "BIOMAC partner (PL7).", iconType: 'institute' },
+            { name: "Aachen-Maastricht Institute for Biobased Materials (AMIBM)", type: "Institute", city: "Geleen (NL) / Aachen (DE)", country: "DE/NL", lat: 50.97, lon: 5.83, focus: ["Biobased Materials"], keyInfo: "Cross-border institute (Maastricht Uni, RWTH Aachen, Fraunhofer IME).", iconType: 'institute' },
+
+            // SE Universities & Institutes
+            { name: "Linkoping University", type: "University", city: "Linköping", country: "SE", lat: 58.39, lon: 15.57, focus: ["Materials Science", "Nanotech"], keyInfo: "#4 Materials Science Europe, #1 Nanotech SE.", iconType: 'university' },
+            { name: "KTH Royal Institute of Technology", type: "University", city: "Stockholm", country: "SE", lat: 59.35, lon: 18.07, focus: ["Nanotech"], keyInfo: "#2 Nanotech SE.", iconType: 'university' },
+            { name: "Chalmers University of Technology", type: "University", city: "Gothenburg", country: "SE", lat: 57.69, lon: 11.97, focus: ["Nanotech", "Materials Engineering"], keyInfo: "#3 Nanotech SE. MSc Nanotechnology, Materials Engineering.", iconType: 'university' },
+            { name: "Lund University", type: "University", city: "Lund", country: "SE", lat: 55.71, lon: 13.20, focus: ["Nanotech"], keyInfo: "#4 Nanotech SE.", iconType: 'university' },
+            { name: "Luleå University of Technology (LTU)", type: "University", city: "Luleå", country: "SE", lat: 65.61, lon: 22.14, focus: ["Lignin", "Wood Chemistry", "Biomass Processing"], keyInfo: "BIOMAC partner (PL1). Research on lignin extraction.", iconType: 'university' },
+            { name: "RISE Research Institutes of Sweden", type: "Institute", city: "Stockholm / Örnsköldsvik / etc.", country: "SE", lat: 59.33, lon: 18.06, focus: ["Lignin", "Cellulose (CNF/CNC)"], keyInfo: "LignoBoost/LignoDemo. Nanocellulose pilot plants (MFC/CNC). BIOMAC (PL2).", iconType: 'institute' },
+            { name: "RISE Processum", type: "Institute", city: "Örnsköldsvik", country: "SE", lat: 63.29, lon: 18.71, focus: ["Biorefinery"], keyInfo: "Biorefinery R&D. BIOMAC partner.", iconType: 'institute' },
+            { name: "LignoCity", type: "Pilot Plant", city: "Bäckhammar", country: "SE", lat: 59.16, lon: 14.13, focus: ["Lignin"], keyInfo: "Open testbed for lignin valorization. Hosts RISE & Lixea pilot.", iconType: 'pilot_plant' },
+
+            // NL Universities & Institutes
+            { name: "Delft University of Technology (TU Delft)", type: "University", city: "Delft", country: "NL", lat: 52.00, lon: 4.37, focus: ["Nanotech"], keyInfo: "#1 Nanotech NL.", iconType: 'university' },
+            { name: "University of Groningen", type: "University", city: "Groningen", country: "NL", lat: 53.22, lon: 6.56, focus: ["Nanoscience"], keyInfo: "#2 Nanotech NL. MSc Nanoscience. Zernike Institute.", iconType: 'university' },
+            { name: "University of Utrecht", type: "University", city: "Utrecht", country: "NL", lat: 52.09, lon: 5.12, focus: ["Nanotech"], keyInfo: "#4 Nanotech NL.", iconType: 'university' },
+            { name: "Wageningen University & Research (WUR)", type: "University", city: "Wageningen", country: "NL", lat: 51.98, lon: 5.66, focus: ["Lignin", "Cellulose", "Biobased Materials"], keyInfo: "Major player. WFBR (Food & Biobased Research - G. van Erven).", iconType: 'university' },
+            { name: "Maastricht University", type: "University", city: "Maastricht", country: "NL", lat: 50.85, lon: 5.69, focus: ["Biobased Materials"], keyInfo: "MSc Biobased Materials. Part of AMIBM.", iconType: 'university' },
+
+            // FR Universities & Institutes
+            { name: "University of Paris-Saclay", type: "University", city: "Paris area", country: "FR", lat: 48.70, lon: 2.17, focus: ["Nanotech"], keyInfo: "#1 Nanotech FR.", iconType: 'university' },
+            { name: "Claude Bernard University Lyon 1", type: "University", city: "Lyon", country: "FR", lat: 45.78, lon: 4.87, focus: ["Chitin/Chitosan", "Polymers"], keyInfo: "#2 Nanotech FR. Prof. Laurent David (EUCHIS President).", iconType: 'university' },
+            { name: "Grenoble Alpes University", type: "University", city: "Grenoble", country: "FR", lat: 45.19, lon: 5.76, focus: ["Nanotech", "Cellulose", "Packaging"], keyInfo: "#4 Nanotech FR. Close ties to CERMAV/LGP2 (packaging focus).", iconType: 'university' },
+            { name: "University of Bordeaux", type: "University", city: "Bordeaux", country: "FR", lat: 44.83, lon: -0.58, focus: ["Nanotech"], keyInfo: "#5 Nanotech FR.", iconType: 'university' },
+            { name: "CERMAV (CNRS)", type: "Institute", city: "Grenoble", country: "FR", lat: 45.19, lon: 5.77, focus: ["Cellulose (CNC/CNF)", "Chitin", "Liquid Crystals", "Packaging"], keyInfo: "Plant Macromolecules Research. CNC self-assembly, composites, nanopaper. Key researchers: Bras, Dufresne, Putaux.", iconType: 'institute' },
+            { name: "LGP2 (Grenoble INP - UGA)", type: "Institute", city: "Grenoble", country: "FR", lat: 45.19, lon: 5.76, focus: ["Pulp & Paper", "Nanocellulose", "Composites", "Surface Functionalization"], keyInfo: "Laboratory of Pulp and Paper Science and Graphic Arts. Coordinated ERC FUNMAT.", iconType: 'institute' },
+
+            // IT Universities & Institutes
+            { name: "University of Bologna", type: "University", city: "Bologna", country: "IT", lat: 44.49, lon: 11.34, focus: ["Nanotech"], keyInfo: "#1 Nanotech IT.", iconType: 'university' },
+            { name: "Sapienza University of Rome", type: "University", city: "Rome", country: "IT", lat: 41.90, lon: 12.51, focus: ["Nanotech"], keyInfo: "#2 Nanotech IT.", iconType: 'university' },
+            { name: "Politecnico di Torino", type: "University", city: "Turin", country: "IT", lat: 45.06, lon: 7.66, focus: ["Nanotech"], keyInfo: "MSc Nanotechnologies.", iconType: 'university' },
+            { name: "University of Milano - Bicocca", type: "University", city: "Milan", country: "IT", lat: 45.51, lon: 9.21, focus: ["Materials Science", "Nanotech"], keyInfo: "MSc Materials Science/Nanotech.", iconType: 'university' },
+            { name: "Ca' Foscari University of Venice", type: "University", city: "Venice", country: "IT", lat: 45.43, lon: 12.32, focus: ["Bio/Nanomaterials"], keyInfo: "MA Bio/Nanomaterials.", iconType: 'university' },
+            { name: "University of Pavia", type: "University", city: "Pavia", country: "IT", lat: 45.18, lon: 9.15, focus: ["Chitin/Chitosan", "Biomedical"], keyInfo: "Prof. Carla Marcella Caramella (EUCHIS Board). Pharmaceutical technology.", iconType: 'university' },
+            { name: "University of Urbino Carlo Bo", type: "University", city: "Urbino", country: "IT", lat: 43.72, lon: 12.63, focus: ["Chitin/Chitosan", "Biomedical"], keyInfo: "Dr. Luca Casettari (EUCHIS Board). Biomaterials, Drug Delivery.", iconType: 'university' },
+            { name: "University of Padua", type: "University", city: "Padua", country: "IT", lat: 45.41, lon: 11.88, focus: ["General Biobased"], keyInfo: "BIOMAC partner.", iconType: 'university' },
+            { name: "University of Modena and Reggio Emilia (UNIMORE)", type: "University", city: "Modena", country: "IT", lat: 44.64, lon: 10.92, focus: ["Biowaste", "Chitin"], keyInfo: "Partner in SCALIBUR project.", iconType: 'university' },
+            { name: "University of Pisa", type: "University", city: "Pisa", country: "IT", lat: 43.72, lon: 10.40, focus: ["Biotechnology", "Plastic Degradation"], keyInfo: "Partner in RECOVER project.", iconType: 'university' },
+            { name: "JRC Nanobiotechnology Laboratory", type: "Institute", city: "Ispra", country: "IT", lat: 45.81, lon: 8.63, focus: ["Nano/Bio Characterization"], keyInfo: "EU Commission Joint Research Centre. Open access.", iconType: 'institute' },
+
+            // ES Universities & Institutes
+            { name: "Autonomous University of Madrid (UAM)", type: "University", city: "Madrid", country: "ES", lat: 40.54, lon: -3.69, focus: ["Nanotech"], keyInfo: "#1 Nanotech ES.", iconType: 'university' },
+            { name: "Complutense University of Madrid (UCM)", type: "University", city: "Madrid", country: "ES", lat: 40.44, lon: -3.72, focus: ["Chitin/Chitosan"], keyInfo: "#2 Nanotech ES. Prof. Inmaculada Aranaz Corral (EUCHIS VP).", iconType: 'university' },
+            { name: "Universitat de Barcelona (UB)", type: "University", city: "Barcelona", country: "ES", lat: 41.38, lon: 2.16, focus: ["Nanoscience/Nanotech"], keyInfo: "MSc Nanoscience/Nanotech.", iconType: 'university' },
+            { name: "Universidad de Valladolid", type: "University", city: "Valladolid", country: "ES", lat: 41.65, lon: -4.72, focus: ["Nanoscience/Nanotech"], keyInfo: "MSc Molecular Nanoscience/Nanotech.", iconType: 'university' },
+            { name: "University of Girona", type: "University", city: "Girona", country: "ES", lat: 41.98, lon: 2.82, focus: ["Cellulose (Nano)", "Polymers"], keyInfo: "LEPAMAP research group known for nanocellulose.", iconType: 'university' },
+            { name: "Miguel Hernandez University", type: "University", city: "Elche", country: "ES", lat: 38.27, lon: -0.69, focus: ["Biotechnology", "Plastic Degradation"], keyInfo: "Partner in RECOVER project.", iconType: 'university' },
+            { name: "ICMAB-CSIC", type: "Institute", city: "Barcelona", country: "ES", lat: 41.48, lon: 2.09, focus: ["Materials Science", "Biomimetics"], keyInfo: "Institute of Materials Science of Barcelona.", iconType: 'institute' },
+            { name: "ITENE", type: "Institute", city: "Valencia", country: "ES", lat: 39.48, lon: -0.47, focus: ["Cellulose (NFC/CNC)", "Packaging", "Coatings", "Inks"], keyInfo: "Packaging Institute. BIOMAC (PL13 - Nanocellulose Prod., PL14 - Bio-coatings). Biodegradable materials.", iconType: 'institute' },
+            { name: "AIMPLAS", type: "Institute", city: "Valencia", country: "ES", lat: 39.48, lon: -0.48, focus: ["Plastics", "Composites", "Biotech", "Chitosan"], keyInfo: "Plastics Technology Institute. BIOMAC (PL11 - Compounding). Extensive pilot plants. Chitosan extraction.", iconType: 'institute' },
+            { name: "CINN (CSIC)", type: "Institute", city: "El Entrego, Asturias", country: "ES", lat: 43.29, lon: -5.68, focus: ["Nanomaterials", "Characterization", "Biotesting"], keyInfo: "Nanomaterials & Nanotechnology Research Center.", iconType: 'institute' },
+            { name: "AIMEN", type: "Institute", city: "O Porriño, Galicia", country: "ES", lat: 42.16, lon: -8.62, focus: ["Materials Processing"], keyInfo: "Technological Centre. BIOMAC partner (PL15).", iconType: 'institute' },
+            { name: "CIB Margarita Salas (CSIC)", type: "Institute", city: "Madrid", country: "ES", lat: 40.44, lon: -3.71, focus: ["Biotechnology", "Lignin", "Enzymes"], keyInfo: "Biological Research Center. Known work on lignin-degrading enzymes.", iconType: 'institute' },
+
+            // FI Universities & Institutes
+            { name: "Aalto University", type: "University", city: "Espoo", country: "FI", lat: 60.18, lon: 24.83, focus: ["Cellulose", "Lignin", "Chitin", "Mechanochemistry", "Pickering Emulsions"], keyInfo: "Bioproducts Chemistry (Österberg), Synthesis Tech (Kaabel). FinnCERES. BioELCell (Rojas). LNP compatibilizers. Industry collaboration (Kemira).", iconType: 'university' },
+            { name: "University of Helsinki", type: "University", city: "Helsinki", country: "FI", lat: 60.17, lon: 24.94, focus: ["Materials Research", "Lignin", "Cellulose"], keyInfo: "MSc Materials Research. LNP/CNF adsorption studies.", iconType: 'university' },
+            { name: "University of Turku", type: "University", city: "Turku", country: "FI", lat: 60.45, lon: 22.28, focus: ["Materials Chemistry"], keyInfo: "MSc Materials Chemistry.", iconType: 'university' },
+            { name: "VTT Technical Research Centre of Finland", type: "Institute", city: "Espoo / Tampere / etc.", country: "FI", lat: 60.18, lon: 24.82, focus: ["Cellulose", "Lignin", "Biomass Processing", "Coatings"], keyInfo: "Leading RTO. Nanocellulose & Coating pilot plants (SutCo, CelluloseFilms). Coordinated NanoTextSurf. ValBio-3D participant.", iconType: 'institute' },
+            { name: "FinnCERES Flagship", type: "Network", city: "Espoo / Helsinki", country: "FI", lat: 60.18, lon: 24.83, focus: ["Lignocellulose"], keyInfo: "Joint competence center (Aalto & VTT).", iconType: 'network' },
+
+            // AT Universities & Institutes
+            { name: "BOKU University Vienna", type: "University", city: "Vienna / Tulln", country: "AT", lat: 48.23, lon: 16.33, focus: ["Lignin", "Cellulose", "Wood Chemistry", "Biorefining", "Composites"], keyInfo: "Inst. Chemistry of Renewable Resources (Prof. Rosenau). ALICE Core Facility.", iconType: 'university' },
+            { name: "Energieinstitut JKU Linz", type: "Institute", city: "Linz", country: "AT", lat: 48.33, lon: 14.32, focus: ["Energy", "Biorefining"], keyInfo: "Partner in CHI-BIO project.", iconType: 'institute' },
+
+            // IE Universities & Institutes
+            { name: "Trinity College Dublin (TCD) - CRANN / AMBER", type: "University", city: "Dublin", country: "IE", lat: 53.34, lon: -6.25, focus: ["Nanoscience", "Materials", "Bioengineering", "Microscopy"], keyInfo: "Leading nanoscience institute. AMBER SFI Centre. Advanced Microscopy Lab. Nanotechnology #1 IE.", iconType: 'university' },
+            { name: "Technological University Dublin (TU Dublin) - Nanolab", type: "University", city: "Dublin", country: "IE", lat: 53.35, lon: -6.27, focus: ["Nanomaterial Characterization", "Nano-bio Interactions"], keyInfo: "Specialized characterization facilities.", iconType: 'university' },
+            { name: "Atlantic Technological University (ATU) Donegal", type: "University", city: "Letterkenny", country: "IE", lat: 54.95, lon: -7.73, focus: ["Chitin (Implied)"], keyInfo: "Formerly Letterkenny IT. Partner in FP7 CHI-BIO.", iconType: 'university' },
+
+             // BE Universities & Institutes
+            { name: "KU Leuven", type: "University", city: "Leuven", country: "BE", lat: 50.88, lon: 4.70, focus: ["Polymers", "Materials Science", "Cellulose"], keyInfo: "Strong materials/polymer science groups, cellulose research.", iconType: 'university' },
+            { name: "Ghent University", type: "University", city: "Ghent", country: "BE", lat: 51.05, lon: 3.72, focus: ["Polymers", "Biotechnology", "Materials"], keyInfo: "Notable polymer/materials groups. Close ties to BBEPP.", iconType: 'university' },
+            { name: "Bio Base Europe Pilot Plant (BBEPP)", type: "Pilot Plant", city: "Ghent", country: "BE", lat: 51.09, lon: 3.78, focus: ["Biomass Processing", "Fractionation", "Fermentation"], keyInfo: "Independent pilot facility. BIOMAC (PL5/6 - Pre-treatment).", iconType: 'pilot_plant' },
+
+            // PT Universities & Institutes
+            { name: "University of Aveiro (UAveiro) - CICECO", type: "University", city: "Aveiro", country: "PT", lat: 40.64, lon: -8.65, focus: ["Materials Science", "Cellulose", "Biopolymers", "Marine Sources"], keyInfo: "CICECO - Aveiro Institute of Materials. Biomimetic/Biological Materials group. Healthcare applications.", iconType: 'university' },
+            { name: "University of Minho (UMinho) - I3Bs", type: "University", city: "Guimarães/Braga", country: "PT", lat: 41.55, lon: -8.42, focus: ["Biomaterials", "Tissue Engineering", "Polysaccharides"], keyInfo: "I3Bs Research Institute (Biomaterials, Biodegradables, Biomimetics). Focus on healthcare applications. Nanotechnology #1 PT.", iconType: 'university' },
+            { name: "NOVA School of Science and Technology", type: "University", city: "Lisbon area (Caparica)", country: "PT", lat: 38.66, lon: -9.20, focus: ["Materials Science", "Biomaterials", "Nanotech"], keyInfo: "Materials research center (CENIMAT/I3N).", iconType: 'university' },
+            { name: "Instituto de Soldadura e Qualidade (ISQ)", type: "Institute", city: "Lisbon (Oeiras)", country: "PT", lat: 38.70, lon: -9.30, focus: ["Testing", "QA", "Process Dev."], keyInfo: "Partner in BIOMAC. Technical testing & quality assurance.", iconType: 'institute' },
+            { name: "ANI - Agência Nacional de Inovação, SA", type: "Institute", city: "Lisbon / Porto", country: "PT", lat: 38.72, lon: -9.14, focus: ["Innovation Funding"], keyInfo: "National innovation agency. Eurostars/Innowwide coordination.", iconType: 'institute' },
+
+            // CZ Universities & Institutes
+            { name: "Technical University of Liberec", type: "University", city: "Liberec", country: "CZ", lat: 50.77, lon: 15.05, focus: ["Nanofibers", "Textiles", "Materials"], keyInfo: "Faculty of Textile Engineering. Known for nanofiber research.", iconType: 'university' },
+            { name: "VSB Ostrava", type: "University", city: "Ostrava", country: "CZ", lat: 49.83, lon: 18.16, focus: ["Materials Engineering", "Nanotech"], keyInfo: "Technical University of Ostrava. Materials engineering focus.", iconType: 'university' },
+            { name: "Institute of Macromolecular Chemistry, CAS", type: "Institute", city: "Prague", country: "CZ", lat: 50.09, lon: 14.47, focus: ["Chitin (Implied)", "Polymers"], keyInfo: "Partner in FP7 N-CHITOPACK.", iconType: 'institute' },
+
+            // EE Universities
+            { name: "University of Tartu", type: "University", city: "Tartu", country: "EE", lat: 58.37, lon: 26.72, focus: ["Materials Science", "Nanomaterials"], keyInfo: "Institute of Chemistry, MSc Materials Sci & Tech, Centres of Excellence.", iconType: 'university' },
+            { name: "Tallinn University of Technology (TalTech)", type: "University", city: "Tallinn", country: "EE", lat: 59.39, lon: 24.67, focus: ["Wood", "Plastics", "Textiles"], keyInfo: "MSc Technology of Wood, Plastics and Textiles.", iconType: 'university' },
+
+             // LT Universities & Institutes
+            { name: "Lithuanian Research Centre for Agriculture and Forestry (LAMMC)", type: "Institute", city: "Akademija", country: "LT", lat: 54.88, lon: 23.85, focus: ["Biomass", "Forestry", "Agri-materials"], keyInfo: "Integrated research center. Institute of Forestry is key entity.", iconType: 'institute' },
+            { name: "Kaunas University of Technology", type: "University", city: "Kaunas", country: "LT", lat: 54.90, lon: 23.95, focus: ["Polymers", "Materials", "Chemical Tech"], keyInfo: "Faculty of Chemical Technology. Polymer/Materials research.", iconType: 'university' },
+
+            // LV Institutes
+            { name: "Latvian State Institute of Wood Chemistry (LSIWC)", type: "Institute", city: "Riga", country: "LV", lat: 56.95, lon: 24.10, focus: ["Lignin (Implied)", "Wood Chemistry"], keyInfo: "National R&D institute in wood chemistry.", iconType: 'institute' },
+
+            // SK Institutes
+            { name: "VUPC (Pulp and Paper Research Institute)", type: "Institute", city: "Bratislava", country: "SK", lat: 48.17, lon: 17.07, focus: ["Pulp", "Paper", "Cellulose", "Lignin (Implied)"], keyInfo: "Pulp/paper R&D. LignoSilva Centre.", iconType: 'institute' },
+
+            // SI Universities & Institutes
+            { name: "InnoRenew CoE", type: "Institute", city: "Izola", country: "SI", lat: 45.54, lon: 13.66, focus: ["Lignin (Nanoparticles)", "Composites", "Renewable Materials"], keyInfo: "Centre of Excellence. Coordinator PACK-NIN project.", iconType: 'institute' },
+            { name: "Pulp and Paper Institute", type: "Institute", city: "Ljubljana", country: "SI", lat: 46.05, lon: 14.50, focus: ["Pulp", "Paper", "Packaging"], keyInfo: "Active research institute, conference host.", iconType: 'institute' },
+            { name: "University of Maribor", type: "University", city: "Maribor", country: "SI", lat: 46.55, lon: 15.64, focus: ["Polymers", "Materials Engineering"], keyInfo: "Faculty of Chemistry and Chemical Engineering, Faculty of Mechanical Engineering.", iconType: 'university' },
+
+            // IS Universities
+            { name: "University of Iceland", type: "University", city: "Reykjavik", country: "IS", lat: 64.14, lon: -21.93, focus: ["Chitin/Chitosan", "Pharmaceutical Sci"], keyInfo: "Prof. Már Másson (EUCHIS VP). Pharmaceutical Sciences.", iconType: 'university' },
+
+            // NO Universities & Institutes
+            { name: "RISE PFI AS", type: "Institute", city: "Trondheim", country: "NO", lat: 63.43, lon: 10.39, focus: ["Cellulose (MFC/CNF)", "Functionalization"], keyInfo: "Formerly PFI. FORISS project, ValBio-3D partner. MFC/CNF R&D.", iconType: 'institute' },
+            { name: "Nofima AS", type: "Institute", city: "Tromsø", country: "NO", lat: 69.65, lon: 18.95, focus: ["Chitin (implied)", "Food Research", "Packaging"], keyInfo: "Food research institute. Partner in FP7 N-CHITOPACK.", iconType: 'institute' },
+            { name: "Norwegian University of Life Sciences (NMBU)", type: "University", city: "Ås", country: "NO", lat: 59.66, lon: 10.78, focus: ["Chitin (implied)", "Biorefining", "Biotechnology"], keyInfo: "Partner in FP7 CHI-BIO project.", iconType: 'university' },
+
+            // LU Institutes
+            { name: "LIST (Luxembourg Institute of Science & Technology)", type: "Institute", city: "Esch-sur-Alzette/Belvaux", country: "LU", lat: 49.50, lon: 5.94, focus: ["Lignin", "Cellulose (CNC/MFC)", "Composites", "Smart Textiles", "CO2 Adsorption"], keyInfo: "Materials Research Dept. BIOMAC (PL9, PL10). Lignin vitrimers, NP reinforcement.", iconType: 'institute' },
+
+            // GR Universities & Institutes
+            { name: "AUTH", type: "University", city: "Thessaloniki", country: "GR", lat: 40.63, lon: 22.95, focus: ["Nanomaterials", "Thin Films"], keyInfo: "Aristotle University. BIOMAC Partner (PL3) & Coordinator.", iconType: 'university' },
+
+            // DK Institutes
+            { name: "Danish Technological Institute (DTI)", type: "Institute", city: "Taastrup", country: "DK", lat: 55.65, lon: 12.29, focus: ["Technology", "Materials"], keyInfo: "BIOMAC partner (PL16). Broad technology expertise.", iconType: 'institute' },
+
+            // Pan-European Institutes/Networks
+            { name: "JRC Nanobiotechnology Laboratory", type: "Institute", city: "Ispra", country: "IT", lat: 45.81, lon: 8.63, focus: ["Nano/Bio Characterization"], keyInfo: "EU Commission Joint Research Centre. Open access.", iconType: 'institute' },
+            { name: "E-MRS", type: "Network", city: "Strasbourg (HQ)", country: "FR", lat: 48.58, lon: 7.75, focus: ["Materials Science"], keyInfo: "European Materials Research Society.", iconType: 'network' },
+            { name: "CERIC-ERIC", type: "Network", city: "Trieste (HQ)", country: "IT", lat: 45.67, lon: 13.78, focus: ["Research Infrastructure"], keyInfo: "Central European Research Infrastructure Consortium.", iconType: 'network' },
+            { name: "NFFA-Europe", type: "Network", city: "Trieste (Coord.)", country: "IT", lat: 45.67, lon: 13.78, focus: ["Nanoscale Research"], keyInfo: "Platform for free access to nano research tools.", iconType: 'network' },
+            { name: "EUTINN", type: "Network", city: "Brussels (Coord.?)", country: "EU", lat: 50.85, lon: 4.35, focus: ["Nanomaterials", "Nanotech"], keyInfo: "European University of Technology Institute of Nanomaterials & Nanotechnologies.", iconType: 'network' },
+
+            // Companies (Sorted Alphabetically by Name for easier review)
+            { name: "ABIS Spolka z Ograniczona Odpowiedzialnoscia SPK", type: "Company", city: "Gliwice", country: "PL", lat: 50.29, lon: 18.67, focus: ["Automation", "Control Systems"], keyInfo: "SME Partner in BIOMAC (PL16).", iconType: 'company' },
+            { name: "Acciona Construcción SA", type: "Company", city: "Madrid", country: "ES", lat: 40.41, lon: -3.70, focus: ["Construction"], keyInfo: "BIOMAC Industrial Validator.", iconType: 'company' },
+            { name: "Adsorbi", type: "Company", city: "Gothenburg", country: "SE", lat: 57.70, lon: 11.97, focus: ["Cellulose (Aerogel)"], keyInfo: "Startup from Chalmers. Cellulose aerogel foam for air pollution capture (packaging etc.).", iconType: 'company' },
+            { name: "Agrana", type: "Company", city: "Vienna", country: "AT", lat: 48.21, lon: 16.37, focus: ["Starch", "Bioplastics"], keyInfo: "EUBP member. Starch-based bioplastics.", iconType: 'company' },
+            { name: "Apronex S.R.O.", type: "Company", city: "Vestec", country: "CZ", lat: 49.98, lon: 14.50, focus: ["Chitin (Implied)"], keyInfo: "SME Partner in FP7 CHI-BIO.", iconType: 'company' },
+            { name: "Aroma System", type: "Company", city: "Rome (approx.)", country: "IT", lat: 41.90, lon: 12.50, focus: ["Packaging", "Flavors?"], keyInfo: "SME Partner in N-CHITOPACK. Location approximate.", iconType: 'company' },
+            { name: "ASAJA", type: "Company", city: "Madrid (approx.)", country: "ES", lat: 40.41, lon: -3.70, focus: ["Agriculture"], keyInfo: "Partner in RECOVER project. National agricultural association.", iconType: 'company' }, // Type is Association, but map uses Company icon
+            { name: "Avantium", type: "Company", city: "Amsterdam", country: "NL", lat: 52.37, lon: 4.89, focus: ["Biobased Chemicals", "FDCA", "PEF"], keyInfo: "Developing FDCA from sugars. Dawn Process™.", iconType: 'company' },
+            { name: "AXIA Innovation", type: "Company", city: "Copenhagen?", country: "DK", lat: 55.67, lon: 12.56, focus: ["Innovation Management"], keyInfo: "BIOMAC partner. Focus on market uptake.", iconType: 'company' },
+            { name: "B4Plastics", type: "Company", city: "Dilsen-Stokkem", country: "BE", lat: 51.03, lon: 5.72, focus: ["Biodegradable Polymers"], keyInfo: "SME developing novel polymers (TriggerPlastics). EIC funded (B4PNOW).", iconType: 'company' },
+            { name: "BASF SE", type: "Company", city: "Ludwigshafen", country: "DE", lat: 49.48, lon: 8.43, focus: ["Chemicals"], keyInfo: "Global chemical company. Pulp & Paper chemicals.", iconType: 'company' },
+            { name: "BEECO", type: "Company", city: "Brussels?", country: "BE", lat: 50.85, lon: 4.35, focus: ["Biomass/Energy Consulting?"], keyInfo: "SME BIOMAC Partner.", iconType: 'company' },
+            { name: "Biozoon", type: "Company", city: "Bremerhaven", country: "DE", lat: 53.54, lon: 8.58, focus: ["Food Technology"], keyInfo: "SME Partner in N-CHITOPACK.", iconType: 'company' },
+            { name: "Borregaard ASA", type: "Company", city: "Sarpsborg", country: "NO", lat: 59.28, lon: 11.11, focus: ["Lignin", "Cellulose (MFC)"], keyInfo: "Advanced biorefinery. Leading producer of Lignosulfonates & MFC (Exilva®).", iconType: 'company' },
+            { name: "Celignis Ltd.", type: "Company", city: "Limerick", country: "IE", lat: 52.66, lon: -8.62, focus: ["Chitin", "Xylan", "Lignocellulose", "Biomass Analysis", "Biorefining"], keyInfo: "SME. Biomass analysis & R&D services. PERFECOAT, BIONEER projects.", iconType: 'company' },
+            { name: "Cellink", type: "Company", city: "Gothenburg", country: "SE", lat: 57.70, lon: 11.98, focus: ["Bioprinting"], keyInfo: "3D Bioprinting technology.", iconType: 'company' },
+            { name: "CelluComp", type: "Company", city: "Glenrothes", country: "UK", lat: 56.19, lon: -3.17, focus: ["Cellulose (CNC)"], keyInfo: "Producer of Curran® CNC from root vegetables.", iconType: 'company' },
+            { name: "Cellugy ApS", type: "Company", city: "Søborg", country: "DK", lat: 55.73, lon: 12.49, focus: ["Cellulose (BNC)"], keyInfo: "Startup producing bacterial nanocellulose (EcoFLEXY™) for cosmetics. Seed funded.", iconType: 'company' },
+            { name: "Clariant", type: "Company", city: "Muttenz", country: "CH", lat: 47.53, lon: 7.64, focus: ["Chemicals"], keyInfo: "Specialty chemicals. Partner in CHI-BIO.", iconType: 'company' },
+            { name: "Comp0live Spin-off", type: "Company", city: "Andalusia (likely)", country: "ES", lat: 37.5, lon: -4.5, focus: ["Cellulose (Nano/Acetate)"], keyInfo: "Planned startup from LIFE project using olive waste for biocomposites/packaging. LIFE C2M support.", iconType: 'company' },
+            { name: "Creative Nano (Cnano)", type: "Company", city: "Athens", country: "GR", lat: 37.98, lon: 23.72, focus: ["Nanolignin", "Nanoparticles"], keyInfo: "SME. BIOMAC partner (PL4). Nanolignin standardization.", iconType: 'company' },
+            { name: "Diad Group SPRL", type: "Company", city: "Rome (approx.)", country: "IT", lat: 42.83, lon: 12.83, focus: ["Unknown"], keyInfo: "BIOMAC Partner. Location uncertain.", iconType: 'company' },
+            { name: "Earagail Eisc Teoranta", type: "Company", city: "Carrick", country: "IE", lat: 54.65, lon: -8.63, focus: ["Chitin Source/Processing?"], keyInfo: "SME partner in FP7 CHI-BIO.", iconType: 'company' },
+            { name: "Evonik", type: "Company", city: "Essen", country: "DE", lat: 51.45, lon: 7.01, focus: ["Chemicals"], keyInfo: "Specialty chemicals. Partner in CHI-BIO.", iconType: 'company' },
+            { name: "Eversia Innova", type: "Company", city: "Madrid (approx.)", country: "ES", lat: 40.41, lon: -3.70, focus: ["Packaging?"], keyInfo: "BIOMAC Industrial Validator. Location uncertain.", iconType: 'company' },
+            { name: "Exelisis IKE", type: "Company", city: "Athens (approx.)", country: "GR", lat: 39.0, lon: 22.0, focus: ["R&D/Consulting?"], keyInfo: "BIOMAC Industrial Validator. Location uncertain.", iconType: 'company' },
+            { name: "France Chitin", type: "Company", city: "Orange", country: "FR", lat: 44.14, lon: 4.81, focus: ["Chitin/Chitosan"], keyInfo: "Chitin/Chitosan producer.", iconType: 'company' },
+            { name: "Heppe Medical Chitosan GmbH", type: "Company", city: "Halle (Saale)", country: "DE", lat: 51.48, lon: 11.97, focus: ["Chitin/Chitosan"], keyInfo: "Medical-grade chitosan producer. EUCHIS Treasurer (Dr. Richter).", iconType: 'company' },
+            { name: "Holmen AB", type: "Company", city: "Stockholm", country: "SE", lat: 59.33, lon: 18.07, focus: ["Forest Products", "Cellulose"], keyInfo: "Partner in nanocellulose pilot plant.", iconType: 'company' },
+            { name: "Idener Research & Development AIE", type: "Company", city: "Seville?", country: "ES", lat: 37.38, lon: -5.98, focus: ["R&D Services"], keyInfo: "SME BIOMAC Partner.", iconType: 'company' },
+            { name: "IRIS Technology Solutions, SL", type: "Company", city: "Barcelona?", country: "ES", lat: 41.38, lon: 2.17, focus: ["Process Monitoring"], keyInfo: "SME BIOMAC Partner.", iconType: 'company' },
+            { name: "IsoTimber / Moelven", type: "Company", city: "Various", country: "SE/NO", lat: 60.0, lon: 15.0, focus: ["Construction", "Lignin (user)"], keyInfo: "Using NeoLigno® binder.", iconType: 'company' },
+            { name: "Kemira", type: "Company", city: "Helsinki (HQ)", country: "FI", lat: 60.17, lon: 24.94, focus: ["Chemicals", "Biobased Polymers"], keyInfo: "Pulp & Paper chemicals. Polysaccharide polymers. Biomass-balanced PAM.", iconType: 'company' },
+            { name: "Kemira Production", type: "Pilot Plant", city: "San Giorgio di Nogaro", country: "IT", lat: 45.80, lon: 13.22, focus: ["Chemicals"], keyInfo: "Biomass-balanced polyacrylamide production.", iconType: 'pilot_plant' }, // Reclassified as Pilot Plant
+            { name: "KOUR", type: "Company", city: "Rome (approx.)", country: "IT", lat: 41.90, lon: 12.50, focus: ["Biowaste"], keyInfo: "Partner in SCALIBUR project. Location approximate.", iconType: 'company' },
+            { name: "Latvijas Finieris", type: "Company", city: "Riga", country: "LV", lat: 56.95, lon: 24.10, focus: ["Wood Products", "Plywood"], keyInfo: "Collaborated with Stora Enso on Lineo™ lignin adhesive.", iconType: 'company' },
+            { name: "Lenzing AG", type: "Company", city: "Lenzing", country: "AT", lat: 47.97, lon: 13.60, focus: ["Cellulose Fibers"], keyInfo: "Major producer of Lyocell (TENCEL™), Modal fibers.", iconType: 'company' },
+            { name: "LignoPure GmbH", type: "Company", city: "Hamburg", country: "DE", lat: 53.55, lon: 9.99, focus: ["Lignin (Nanoparticles/Powders)"], keyInfo: "Startup producing LignoBase™ lignin ingredients for cosmetics. €2.4M funding.", iconType: 'company' },
+            { name: "Lignovations GmbH", type: "Company", city: "Klosterneuburg", country: "AT", lat: 48.30, lon: 16.32, focus: ["Lignin (Colloidal Particles)"], keyInfo: "Startup producing LignoGuard® colloidal lignin for cosmetics, etc. Member EUBP, Lignin Club.", iconType: 'company' },
+            { name: "Lixea", type: "Company", city: "London", country: "UK", lat: 51.50, lon: -0.12, focus: ["Biomass Fractionation", "Ionic Liquids", "Lignin", "Cellulose"], keyInfo: "Developing novel fractionation process. Pilot plant at LignoCity (SE).", iconType: 'company' },
+            { name: "MakeGrowLab", type: "Company", city: "Puławy", country: "PL", lat: 51.41, lon: 21.97, focus: ["Cellulose (Bacterial Nanocellulose)", "Packaging"], keyInfo: "Startup converting food waste to Scoby Packaging Material (SPM). EIT Food participant.", iconType: 'company' },
+            { name: "MAVI Sud Srl", type: "Company", city: "Aprilia", country: "IT", lat: 41.59, lon: 12.65, focus: ["Chitin (Nanofibrils)"], keyInfo: "SME with patented CN process. Coordinated N-CHITOPACK. Focus on packaging & biomedical.", iconType: 'company' },
+            { name: "Melodea Ltd.", type: "Company", city: "Rehovot (HQ)", country: "IL", lat: 31.89, lon: 34.81, focus: ["Cellulose (CNC)", "Packaging Coatings"], keyInfo: "Active in CNC market. Partnering on CNC pilot plant in Sweden. Commercial products.", iconType: 'company' },
+            { name: "Microtec", type: "Company", city: "Rome (approx.)", country: "IT", lat: 41.90, lon: 12.50, focus: ["Technology?"], keyInfo: "SME Partner in N-CHITOPACK. Location approximate.", iconType: 'company' },
+            { name: "Modern Synthesis", type: "Company", city: "London", country: "UK", lat: 51.52, lon: -0.08, focus: ["Cellulose (BNC - Microbial Weaving)"], keyInfo: "Startup creating nanocellulose textiles. $5.5M funding. GANNI collab.", iconType: 'company' },
+            { name: "Mondi", type: "Company", city: "Vienna (Group office)", country: "AT", lat: 48.21, lon: 16.37, focus: ["Packaging", "Paper"], keyInfo: "Sustainable paper/packaging solutions.", iconType: 'company' },
+            { name: "MoRe Research", type: "Company", city: "Örnsköldsvik", country: "SE", lat: 63.29, lon: 18.72, focus: ["Cellulose (CNC)", "Forest Products"], keyInfo: "R&D company. Partner in new CNC pilot plant.", iconType: 'company' },
+            { name: "Nanotypos (NNT)", type: "Company", city: "Thessaloniki", country: "GR", lat: 40.64, lon: 22.94, focus: ["Nanomanufacturing", "Printed Electronics"], keyInfo: "SME. BIOMAC partner (PL17).", iconType: 'company' },
+            { name: "Naturplas", type: "Company", city: "Madrid (approx.)", country: "ES", lat: 40.41, lon: -3.70, focus: ["Plastics"], keyInfo: "Partner in RECOVER project. Location approximate.", iconType: 'company' },
+            { name: "Northvolt", type: "Company", city: "Stockholm (HQ) / Skellefteå (Plant)", country: "SE", lat: 64.75, lon: 20.95, focus: ["Batteries", "Lignin (user)"], keyInfo: "Battery manufacturer. Partnering with Stora Enso on Lignode®.", iconType: 'company' },
+            { name: "Nouryon", type: "Company", city: "Amsterdam", country: "NL", lat: 52.37, lon: 4.89, focus: ["Chemicals"], keyInfo: "Specialty chemicals (ex-AkzoNobel). Cellulose derivatives.", iconType: 'company' },
+            { name: "NovaMatrix (FMC Corp)", type: "Company", city: "Sandvika", country: "NO", lat: 59.89, lon: 10.53, focus: ["Chitin/Chitosan"], keyInfo: "Producer of ultrapure biopolymers for biomedical applications.", iconType: 'company' },
+            { name: "Novamont SPA", type: "Company", city: "Novara", country: "IT", lat: 45.44, lon: 8.62, focus: ["Bioplastics"], keyInfo: "Leading bioplastics company. BIOMAC validator.", iconType: 'company' },
+            { name: "Ohmatex A/S", type: "Company", city: "Skovlunde", country: "DK", lat: 55.72, lon: 12.41, focus: ["Smart Textiles"], keyInfo: "BIOMAC Industrial Validator.", iconType: 'company' },
+            { name: "Postnova Analytics", type: "Company", city: "Landsberg am Lech", country: "DE", lat: 48.05, lon: 10.87, focus: ["Analytical Instruments"], keyInfo: "Coordinator of NanoCELL project.", iconType: 'company' },
+            { name: "Primex", type: "Company", city: "Siglufjörður", country: "IS", lat: 66.15, lon: -18.90, focus: ["Chitin/Chitosan"], keyInfo: "Chitin/Chitosan producer.", iconType: 'company' },
+            { name: "Rodax Impex", type: "Company", city: "Bucharest (approx.)", country: "RO", lat: 44.43, lon: 26.10, focus: ["Unknown"], keyInfo: "SME Partner in N-CHITOPACK. Location approximate.", iconType: 'company' },
+            { name: "Sappi", type: "Company", city: "Brussels (EU HQ)", country: "BE", lat: 50.85, lon: 4.35, focus: ["Lignin", "Cellulose (MFC - Valida™)"], keyInfo: "Global pulp/paper co. Commercial Lignin & MFC producer.", iconType: 'company' },
+            { name: "Smurfit Kappa", type: "Company", city: "Dublin (HQ)", country: "IE", lat: 53.34, lon: -6.26, focus: ["Packaging", "Paper"], keyInfo: "Global paper-based packaging leader.", iconType: 'company' },
+            { name: "Solvay", type: "Company", city: "Brussels", country: "BE", lat: 50.85, lon: 4.35, focus: ["Chemicals"], keyInfo: "Multinational chemical company.", iconType: 'company' },
+            { name: "STAM Srl", type: "Company", city: "Genoa?", country: "IT", lat: 44.40, lon: 8.93, focus: ["Engineering"], keyInfo: "SME BIOMAC Partner.", iconType: 'company' },
+            { name: "Stora Enso", type: "Company", city: "Helsinki (HQ)", country: "FI", lat: 60.17, lon: 24.95, focus: ["Lignin", "Cellulose", "Biomaterials"], keyInfo: "Lineo™, NeoLigno®, Lignode®. Sunila Lignode Pilot.", iconType: 'company' },
+            { name: "UPM", type: "Company", city: "Helsinki (HQ)", country: "FI", lat: 60.17, lon: 24.94, focus: ["Cellulose (Nano)", "Biochemicals", "Biomedical"], keyInfo: "UPM Biomedicals (GrowDex®, FibDex®, FibGel™).", iconType: 'company' },
+
+            // Networks (Sorted Alphabetically)
+            { name: "ACPP (Assoc. Czech Pulp & Paper Ind.)", type: "Network", city: "Prague?", country: "CZ", lat: 50.08, lon: 14.42, focus: ["Industry Association"], keyInfo: "National CEPI member.", iconType: 'network' },
+            { name: "BIOMAC OITB", type: "Network", city: "Europe-wide (Coord. GR)", country: "EU", lat: 50.85, lon: 4.35, focus: ["Lignin", "Cellulose", "Pilot Lines"], keyInfo: "Open Innovation Test Bed for Nano-Bio Materials. 17 Pilot Lines. Coordinated by AUTH.", iconType: 'network' },
+            { name: "Biond", type: "Network", city: "Lisbon?", country: "PT", lat: 38.72, lon: -9.14, focus: ["Industry Association"], keyInfo: "Portuguese Association of Pulp, Paper and Cardboard Industries. CEPI member.", iconType: 'network' },
+            { name: "CCIS (Chamber of Commerce - Paper Assoc.)", type: "Network", city: "Ljubljana", country: "SI", lat: 46.05, lon: 14.50, focus: ["Industry Association"], keyInfo: "Represents paper industry. CEPI member.", iconType: 'network' },
+            { name: "CEPI (Confederation of European Paper Industries)", type: "Network", city: "Brussels", country: "BE", lat: 50.84, lon: 4.37, focus: ["Pulp", "Paper", "Bioeconomy"], keyInfo: "Umbrella org for national paper associations.", iconType: 'network' },
+            { name: "Die Papierindustrie", type: "Network", city: "Berlin/Bonn?", country: "DE", lat: 52.52, lon: 13.40, focus: ["Industry Association"], keyInfo: "German national paper industry assoc. CEPI member.", iconType: 'network' },
+            { name: "EUBIA (European Biomass Industry Association)", type: "Network", city: "Brussels", country: "BE", lat: 50.85, lon: 4.35, focus: ["Biomass", "Bioenergy"], keyInfo: "BIOMAC Partner.", iconType: 'network' },
+            { name: "EUCHIS", type: "Network", city: "Europe-wide (Pres. FR)", country: "EU", lat: 45.78, lon: 4.87, focus: ["Chitin/Chitosan"], keyInfo: "European Chitin Society. Key academic & industry members.", iconType: 'network' },
+            { name: "European Bioplastics (EUBP)", type: "Network", city: "Berlin", country: "DE", lat: 52.52, lon: 13.40, focus: ["Bioplastics"], keyInfo: "Industry association. BIOMAC partner. Members include LignoPure, Lignovations, Stora Enso.", iconType: 'network' },
+            { name: "FFIF (Finnish Forest Industries Federation)", type: "Network", city: "Helsinki", country: "FI", lat: 60.17, lon: 24.94, focus: ["Industry Association"], keyInfo: "National CEPI member.", iconType: 'network' },
+            { name: "INSTM", type: "Network", city: "Florence (Consortium HQ)", country: "IT", lat: 43.77, lon: 11.25, focus: ["Materials Science"], keyInfo: "University consortium, partner in N-CHITOPACK and CHI-BIO.", iconType: 'network' },
+            { name: "Lignin Club", type: "Network", city: "Finland?", country: "FI", lat: 60.17, lon: 24.94, focus: ["Lignin"], keyInfo: "Industry network fostering lignin ecosystem. Members include LignoPure, Lignovations.", iconType: 'network' },
+            { name: "Norsk Industri", type: "Network", city: "Oslo", country: "NO", lat: 59.91, lon: 10.75, focus: ["Industry Association", "Pulp & Paper"], keyInfo: "National industry association. CEPI member.", iconType: 'network' },
+            { name: "Plastics Europe", type: "Network", city: "Brussels", country: "BE", lat: 50.85, lon: 4.35, focus: ["Industry Association", "Plastics Manufacturing"], keyInfo: "Represents broader plastics industry. Includes bio-based producers.", iconType: 'network' },
+            { name: "SFIF (Swedish Forest Industries Federation)", type: "Network", city: "Stockholm", country: "SE", lat: 59.33, lon: 18.06, focus: ["Industry Association"], keyInfo: "National CEPI member.", iconType: 'network' },
+            { name: "SPP (Stowarzyszenie Papierników Polskich)", type: "Network", city: "Warsaw", country: "PL", lat: 52.22, lon: 21.01, focus: ["Industry Association", "Pulp & Paper"], keyInfo: "Polish Pulp and Paper Association. CEPI member.", iconType: 'network' },
+            { name: "ZCPP SR (Assoc. Slovak Pulp & Paper Ind.)", type: "Network", city: "Bratislava?", country: "SK", lat: 48.15, lon: 17.11, focus: ["Industry Association"], keyInfo: "National CEPI member.", iconType: 'network' },
         ];
 
+        // --- Data Processing & Merging ---
+        const combinedEntitiesMap = new Map();
+        // Use a more specific key including type for deduplication
+        const getEntityKey = entity => `${entity.name.toLowerCase().trim()}_${entity.city.toLowerCase().trim()}_${entity.type.toLowerCase().trim()}`;
+        entitiesData.forEach(entity => {
+            if (entity && entity.name && entity.city && entity.type) { // Basic check for key components
+                 combinedEntitiesMap.set(getEntityKey(entity), entity);
+            } else {
+                console.warn("Skipping entity due to missing key component:", entity);
+            }
+        });
+        const finalEntities = Array.from(combinedEntitiesMap.values());
+
+        // --- Marker and Layer Creation ---
         const markers = L.markerClusterGroup({ maxClusterRadius: 55, spiderfyOnMaxZoom: true, showCoverageOnHover: false, zoomToBoundsOnClick: true });
-        const layers = {
-            university: L.layerGroup(), institute: L.layerGroup(), company: L.layerGroup(),
-            pilot_plant: L.layerGroup(), network: L.layerGroup(), other: L.layerGroup()
-        };
+        const layers = { university: L.layerGroup(), institute: L.layerGroup(), company: L.layerGroup(), pilot_plant: L.layerGroup(), network: L.layerGroup(), other: L.layerGroup() };
 
         const createPopupContent = entity => `
             <b class="popup-title">${entity.name}</b>
@@ -238,47 +372,50 @@
                  <span class="content-text location"><strong>Location:</strong> ${entity.city}, ${entity.country}</span>
             </div>
             <div class="popup-section">
-                <h4>Focus Areas:</h4>
-                <span class="content-text focus">${Array.isArray(entity.focus) ? entity.focus.join(', ') : (entity.focus || 'N/A')}</span>
+                 <h4>Focus Areas:</h4>
+                 <span class="content-text focus">${Array.isArray(entity.focus) ? entity.focus.join(', ') : (entity.focus || 'N/A')}</span>
             </div>
             <div class="popup-section">
-                <h4>Key Information / Notes:</h4>
-                <span class="content-text info">${entity.keyInfo || 'N/A'}</span>
+                 <h4>Key Information / Notes:</h4>
+                 <span class="content-text info">${entity.keyInfo || 'N/A'}</span>
             </div>
             <div class="popup-section">
-                <a href="https://www.google.com/search?q=${encodeURIComponent(entity.name + ' ' + entity.city)}" target="_blank" rel="noopener noreferrer">Search Online...</a>
+                 <a href="https://www.google.com/search?q=${encodeURIComponent(entity.name + ' ' + entity.city + ' ' + entity.country)}" target="_blank" rel="noopener noreferrer">Search Online...</a>
             </div>`;
 
-        bioNanoEntities.forEach(entity => {
+        finalEntities.forEach(entity => {
+            if (typeof entity.lat !== 'number' || typeof entity.lon !== 'number') {
+                console.warn("Skipping entity due to invalid coordinates:", entity);
+                return; // Skip if coordinates are missing or invalid
+            }
             const iconType = entity.iconType || 'other';
             const marker = L.marker([entity.lat, entity.lon], { icon: icons[iconType] || icons.other, alt: entity.name })
                 .bindPopup(createPopupContent(entity), { maxWidth: 400 })
                 .bindTooltip(entity.name);
 
+            marker.on('mouseover', function (e) { this.getElement()?.classList.add('marker-hover'); });
+            marker.on('mouseout', function (e) { this.getElement()?.classList.remove('marker-hover'); });
+
             const targetLayer = layers[iconType] || layers.other;
             targetLayer.addLayer(marker);
-
             if (iconType !== 'network') {
                 markers.addLayer(marker);
-            } else {
-                 targetLayer.addTo(map);
             }
         });
 
         markers.addTo(map);
-        Object.entries(layers).forEach(([key, layer]) => {
-            if (key !== 'network') layer.addTo(map); // Add all layers except network initially
-        });
+        Object.values(layers).forEach(layer => layer.addTo(map)); // Add all layers for control
 
+        // --- Map Controls ---
         const baseMaps = { "Carto Positron": cartoPositron, "OpenStreetMap": osmTile, "Stamen Toner Lite": stamenTonerLite };
         const overlayMaps = {
-            [`<span class="layer-control-icon" style="background-color:#1e88e5;"></span><span>Universities (${layers.university.getLayers().length})</span>`]: layers.university,
-            [`<span class="layer-control-icon" style="background-color:#43a047;"></span><span>Institutes (${layers.institute.getLayers().length})</span>`]: layers.institute,
-            [`<span class="layer-control-icon" style="background-color:#8e24aa;"></span><span>Companies (${layers.company.getLayers().length})</span>`]: layers.company,
-            [`<span class="layer-control-icon" style="background-color:#fb8c00;"></span><span>Pilot Plants (${layers.pilot_plant.getLayers().length})</span>`]: layers.pilot_plant,
-            [`<span class="layer-control-icon" style="background-color:#d81b60;"></span><span>Networks (${layers.network.getLayers().length})</span>`]: layers.network,
+            [`<span class="layer-control-icon" style="background-color:#42a5f5;"></span><span> Universities (${layers.university.getLayers().length})</span>`]: layers.university,
+            [`<span class="layer-control-icon" style="background-color:#66bb6a;"></span><span> Institutes/RTOs (${layers.institute.getLayers().length})</span>`]: layers.institute,
+            [`<span class="layer-control-icon" style="background-color:#ab47bc;"></span><span> Companies (${layers.company.getLayers().length})</span>`]: layers.company,
+            [`<span class="layer-control-icon" style="background-color:#ffa726;"></span><span> Pilot Plants/Facilities (${layers.pilot_plant.getLayers().length})</span>`]: layers.pilot_plant,
+            [`<span class="layer-control-icon" style="background-color:#ec407a;"></span><span> Networks/Associations (${layers.network.getLayers().length})</span>`]: layers.network,
+            [`<span class="layer-control-icon" style="background-color:#8c96a0;"></span><span> Other (${layers.other.getLayers().length})</span>`]: layers.other
         };
-
         L.control.layers(baseMaps, overlayMaps, { collapsed: true, position: 'topright' }).addTo(map);
         L.control.scale({ imperial: false }).addTo(map);
 
@@ -298,4 +435,3 @@
 </body>
 </html>
 
-</html>
