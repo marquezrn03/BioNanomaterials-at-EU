@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>European Landscape: Bio-Based Nanomaterials (Search Added)</title>
+    <title>European Landscape: Bio-Based Nanomaterials (More Institutions Added)</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
@@ -316,7 +316,7 @@
         };
 
 
-        // --- Comprehensive Data Source (UPDATED Stockholm University) ---
+        // --- Comprehensive Data Source (Added new institutions) ---
         const entitiesData = [
              // UK Universities
             { name: "University of Cambridge", type: "University", city: "Cambridge", country: "UK", lat: 52.20, lon: 0.12, focus: ["Materials Science", "Nanotech"], keyInfo: "#1 Materials Science Europe, #1 Nanotech UK.", iconType: 'university' },
@@ -334,6 +334,7 @@
             { name: "EPFL Lausanne", type: "University", city: "Lausanne", country: "CH", lat: 46.52, lon: 6.56, focus: ["Nanotech"], keyInfo: "#1 Nanotech CH.", iconType: 'university' },
             { name: "University of Basel", type: "University", city: "Basel", country: "CH", lat: 47.55, lon: 7.59, focus: ["Nanotech"], keyInfo: "#3 Nanotech CH.", iconType: 'university' },
             { name: "Empa", type: "Institute", city: "Dübendorf/St. Gallen", country: "CH", lat: 47.39, lon: 8.61, focus: ["Cellulose", "Lignin", "Wood Materials", "Aerogels", "3D Printing"], keyInfo: "Cellulose & Wood Materials Lab (Dr. Nyström). LCNFs, aerogels, 3D printing.", iconType: 'institute' },
+            { name: "Université de Genève", type: "University", city: "Geneva", country: "CH", lat: 46.20, lon: 6.14, focus: ["General Research"], keyInfo: "Invited speaker (Ross Milton) at MRS Symposium on Biohybrid Devices.", iconType: 'university' }, // NEW
 
             // DE Universities & Institutes
             { name: "Karlsruhe Institute of Technology (KIT)", type: "University", city: "Karlsruhe", country: "DE", lat: 49.01, lon: 8.40, focus: ["Materials Science", "Nanotech", "Cellulose", "Lignin", "Sustainable Polymers", "Catalysis"], keyInfo: "#3 Materials Science Europe. Prof. Behrens (NPs), Prof. Meier (Sustainable Polymers), Prof. Holtmann (Biotech).", iconType: 'university' },
@@ -354,6 +355,10 @@
             { name: "Fraunhofer IBMT", type: "Institute", city: "St. Ingbert", country: "DE", lat: 49.28, lon: 7.11, focus: ["Nanotoxicology", "Biomedical"], keyInfo: "Biomedical Engineering. Nanocellulose safety (NanoCELL).", iconType: 'institute' },
             { name: "Leibniz Institute for Agricultural Engineering and Bioeconomy (ATB)", type: "Institute", city: "Potsdam", country: "DE", lat: 52.38, lon: 13.07, focus: ["Biomass Processing"], keyInfo: "BIOMAC partner (PL7).", iconType: 'institute' },
             { name: "Aachen-Maastricht Institute for Biobased Materials (AMIBM)", type: "Institute", city: "Geleen (NL) / Aachen (DE)", country: "DE/NL", lat: 50.97, lon: 5.83, focus: ["Biobased Materials"], keyInfo: "Cross-border institute (Maastricht Uni, RWTH Aachen, Fraunhofer IME).", iconType: 'institute' },
+            { name: "FDX Fluid Dynamix GmbH", type: "Company", city: "Berlin", country: "DE", lat: 52.52, lon: 13.40, focus: ["Fluid Dynamics"], keyInfo: "Partner in \"Zielwirk\" project (chitosan for mRNA delivery).", iconType: 'company' }, // NEW
+            { name: "Fraunhofer Institute for Production Systems and Design Technology (IPK)", type: "Institute", city: "Berlin", country: "DE", lat: 52.51, lon: 13.32, focus: ["Production Tech"], keyInfo: "Partner in \"Zielwirk\" project (chitosan for mRNA delivery).", iconType: 'institute' }, // NEW
+            { name: "Martin Luther University Halle-Wittenberg", type: "University", city: "Halle (Saale)", country: "DE", lat: 51.48, lon: 11.97, focus: ["Chitosan", "mRNA Delivery"], keyInfo: "Partner in \"Zielwirk\" project.", iconType: 'university' }, // NEW
+            { name: "University of Potsdam", type: "University", city: "Potsdam", country: "DE", lat: 52.40, lon: 13.06, focus: ["General Research"], keyInfo: "EUCHIS 2023 Scientific Committee member (Martin Peter).", iconType: 'university' }, // NEW
 
             // SE Universities & Institutes
             { name: "Linkoping University", type: "University", city: "Linköping", country: "SE", lat: 58.39, lon: 15.57, focus: ["Materials Science", "Nanotech"], keyInfo: "#4 Materials Science Europe, #1 Nanotech SE.", iconType: 'university' },
@@ -361,11 +366,16 @@
             { name: "Chalmers University of Technology", type: "University", city: "Gothenburg", country: "SE", lat: 57.69, lon: 11.97, focus: ["Nanotech", "Materials Engineering"], keyInfo: "#3 Nanotech SE. MSc Nanotechnology, Materials Engineering.", iconType: 'university' },
             { name: "Lund University", type: "University", city: "Lund", country: "SE", lat: 55.71, lon: 13.20, focus: ["Nanotech"], keyInfo: "#4 Nanotech SE.", iconType: 'university' },
             { name: "Luleå University of Technology (LTU)", type: "University", city: "Luleå", country: "SE", lat: 65.61, lon: 22.14, focus: ["Lignin", "Wood Chemistry", "Biomass Processing"], keyInfo: "BIOMAC partner (PL1). Research on lignin extraction.", iconType: 'university' },
-            // UPDATED Stockholm University Entry
-            { name: "Stockholm University - Dept. of Chemistry", type: "University", city: "Stockholm", country: "SE", lat: 59.3668831, lon: 18.0596599, focus: ["Chemistry", "Materials", "Natural Sciences"], keyInfo: "Major Swedish university, specific focus in Chemistry Dept.", iconType: 'university' },
+            { name: "Stockholm University - Dept. of Chemistry", type: "University", city: "Stockholm", country: "SE", lat: 59.3668831, lon: 18.0596599, focus: ["Chemistry", "Materials", "Natural Sciences"], keyInfo: "Major Swedish university, specific focus in Chemistry Dept.", iconType: 'university' }, // UPDATED
             { name: "RISE Research Institutes of Sweden", type: "Institute", city: "Stockholm / Örnsköldsvik / etc.", country: "SE", lat: 59.33, lon: 18.06, focus: ["Lignin", "Cellulose (CNF/CNC)"], keyInfo: "LignoBoost/LignoDemo. Nanocellulose pilot plants (MFC/CNC). BIOMAC (PL2).", iconType: 'institute' },
             { name: "RISE Processum", type: "Institute", city: "Örnsköldsvik", country: "SE", lat: 63.29, lon: 18.71, focus: ["Biorefinery"], keyInfo: "Biorefinery R&D. BIOMAC partner.", iconType: 'institute' },
             { name: "LignoCity", type: "Pilot Plant", city: "Bäckhammar", country: "SE", lat: 59.16, lon: 14.13, focus: ["Lignin"], keyInfo: "Open testbed for lignin valorization. Hosts RISE & Lixea pilot.", iconType: 'pilot_plant' },
+            { name: "Data-driven Life Science (DDLS)", type: "Network", city: "Stockholm", country: "SE", lat: 59.33, lon: 18.06, focus: ["Life Science", "Data Science"], keyInfo: "Wallenberg-funded program, potential collaboration with WWSC/WISE.", iconType: 'network' }, // NEW
+            { name: "Experimentell Cancer Medicin (ECM)", type: "Institute", city: "Huddinge", country: "SE", lat: 59.24, lon: 17.98, focus: ["Cancer Research", "Vaccine Delivery"], keyInfo: "Research on chitosan nanoparticles for vaccine delivery. (Likely Karolinska Inst.)", iconType: 'institute' }, // NEW
+            { name: "Mid Sweden University", type: "University", city: "Sundsvall", country: "SE", lat: 62.39, lon: 17.30, focus: ["Forest Products", "Chemistry"], keyInfo: "Hosting EPNOE 2025 conference; FSCN Research Centre.", iconType: 'university' }, // NEW
+            { name: "Treesearch", type: "Network", city: "Stockholm", country: "SE", lat: 59.33, lon: 18.06, focus: ["Forest Biomaterials"], keyInfo: "Industry support platform for WWSC.", iconType: 'network' }, // NEW
+            { name: "Wallenberg Centre for Quantum Technology (WACQT)", type: "Network", city: "Gothenburg", country: "SE", lat: 57.70, lon: 11.97, focus: ["Quantum Technology"], keyInfo: "Wallenberg-funded program, potential collaboration with WWSC/WISE.", iconType: 'network' }, // NEW (Coord at Chalmers)
+            { name: "Wallenberg Initiative Material Science for Sustainability (WISE)", type: "Network", city: "Linköping", country: "SE", lat: 58.39, lon: 15.57, focus: ["Sustainable Materials"], keyInfo: "Wallenberg-funded program, potential collaboration with WWSC.", iconType: 'network' }, // NEW (Coord at Linkoping)
 
             // NL Universities & Institutes
             { name: "Delft University of Technology (TU Delft)", type: "University", city: "Delft", country: "NL", lat: 52.00, lon: 4.37, focus: ["Nanotech"], keyInfo: "#1 Nanotech NL.", iconType: 'university' },
@@ -373,6 +383,8 @@
             { name: "University of Utrecht", type: "University", city: "Utrecht", country: "NL", lat: 52.09, lon: 5.12, focus: ["Nanotech"], keyInfo: "#4 Nanotech NL.", iconType: 'university' },
             { name: "Wageningen University & Research (WUR)", type: "University", city: "Wageningen", country: "NL", lat: 51.98, lon: 5.66, focus: ["Lignin", "Cellulose", "Biobased Materials"], keyInfo: "Major player. WFBR (Food & Biobased Research - G. van Erven).", iconType: 'university' },
             { name: "Maastricht University", type: "University", city: "Maastricht", country: "NL", lat: 50.85, lon: 5.69, focus: ["Biobased Materials"], keyInfo: "MSc Biobased Materials. Part of AMIBM.", iconType: 'university' },
+            { name: "Leiden University Medical Center", type: "University", city: "Leiden", country: "NL", lat: 52.16, lon: 4.49, focus: ["Medical Research", "Carbohydrates"], keyInfo: "Co-organizer of carbohydrate course.", iconType: 'university' }, // NEW
+            { name: "University of Twente", type: "University", city: "Enschede", country: "NL", lat: 52.22, lon: 6.89, focus: ["Sustainable Polymers", "Cellulose", "Lignin", "Starch"], keyInfo: "Sustainable Polymer Chemistry group.", iconType: 'university' }, // NEW
 
             // FR Universities & Institutes
             { name: "University of Paris-Saclay", type: "University", city: "Paris area", country: "FR", lat: 48.70, lon: 2.17, focus: ["Nanotech"], keyInfo: "#1 Nanotech FR.", iconType: 'university' },
@@ -381,6 +393,10 @@
             { name: "University of Bordeaux", type: "University", city: "Bordeaux", country: "FR", lat: 44.83, lon: -0.58, focus: ["Nanotech"], keyInfo: "#5 Nanotech FR.", iconType: 'university' },
             { name: "CERMAV (CNRS)", type: "Institute", city: "Grenoble", country: "FR", lat: 45.19, lon: 5.77, focus: ["Cellulose (CNC/CNF)", "Chitin", "Liquid Crystals", "Packaging"], keyInfo: "Plant Macromolecules Research. CNC self-assembly, composites, nanopaper. Key researchers: Bras, Dufresne, Putaux.", iconType: 'institute' },
             { name: "LGP2 (Grenoble INP - UGA)", type: "Institute", city: "Grenoble", country: "FR", lat: 45.19, lon: 5.76, focus: ["Pulp & Paper", "Nanocellulose", "Composites", "Surface Functionalization"], keyInfo: "Laboratory of Pulp and Paper Science and Graphic Arts. Coordinated ERC FUNMAT.", iconType: 'institute' },
+            { name: "Campus des Métiers et des Qualifications Forêt-Bois", type: "Network", city: "Toulouse", country: "FR", lat: 43.60, lon: 1.44, focus: ["Forestry", "Wood", "Education"], keyInfo: "Co-organizing conference on Wood and Chemistry.", iconType: 'network' }, // NEW
+            { name: "CRT Catar", type: "Institute", city: "Toulouse", country: "FR", lat: 43.60, lon: 1.44, focus: ["Technology Transfer", "Wood"], keyInfo: "Co-organizing conference on Wood and Chemistry.", iconType: 'institute' }, // NEW
+            { name: "Institut Universitaire de France (IUF)", type: "Network", city: "Paris", country: "FR", lat: 48.85, lon: 2.35, focus: ["Research Funding"], keyInfo: "Affiliation of researcher involved in lignin nanoparticle templating study.", iconType: 'network' }, // NEW
+            { name: "Toulouse INP-ENSIACET", type: "University", city: "Toulouse", country: "FR", lat: 43.56, lon: 1.47, focus: ["Agroindustrial Chemistry", "Wood"], keyInfo: "Hosting conference on Wood and Chemistry; Laboratoire de Chimie Agroindustrielle.", iconType: 'university' }, // NEW
 
             // IT Universities & Institutes
             { name: "University of Bologna", type: "University", city: "Bologna", country: "IT", lat: 44.49, lon: 11.34, focus: ["Nanotech"], keyInfo: "#1 Nanotech IT.", iconType: 'university' },
@@ -393,8 +409,12 @@
             { name: "University of Padua", type: "University", city: "Padua", country: "IT", lat: 45.41, lon: 11.88, focus: ["General Biobased"], keyInfo: "BIOMAC partner.", iconType: 'university' },
             { name: "University of Modena and Reggio Emilia (UNIMORE)", type: "University", city: "Modena", country: "IT", lat: 44.64, lon: 10.92, focus: ["Biowaste", "Chitin"], keyInfo: "Partner in SCALIBUR project.", iconType: 'university' },
             { name: "University of Pisa", type: "University", city: "Pisa", country: "IT", lat: 43.72, lon: 10.40, focus: ["Biotechnology", "Plastic Degradation"], keyInfo: "Partner in RECOVER project.", iconType: 'university' },
-            { name: "University of Bari Aldo Moro", type: "University", city: "Bari", country: "IT", lat: 41.11, lon: 16.87, focus: ["General Research", "Chemistry", "Physics", "Biotech"], keyInfo: "Major university in Southern Italy. #13 Nanotech IT (approx.).", iconType: 'university' }, // ADDED
+            { name: "University of Bari Aldo Moro", type: "University", city: "Bari", country: "IT", lat: 41.11, lon: 16.87, focus: ["General Research", "Chemistry", "Physics", "Biotech"], keyInfo: "Major university in Southern Italy. #13 Nanotech IT (approx.).", iconType: 'university' },
             { name: "JRC Nanobiotechnology Laboratory", type: "Institute", city: "Ispra", country: "IT", lat: 45.81, lon: 8.63, focus: ["Nano/Bio Characterization"], keyInfo: "EU Commission Joint Research Centre. Open access.", iconType: 'institute' },
+            { name: "Consiglio Nazionale delle Ricerche (CNR)", type: "Network", city: "Rome", country: "IT", lat: 41.90, lon: 12.49, focus: ["General Research"], keyInfo: "National Research Council. Specific institutes involved (ICCOM Bari, ISB Rome).", iconType: 'network' }, // NEW (Main entry, specific labs noted in info)
+            { name: "University of Perugia", type: "University", city: "Perugia", country: "IT", lat: 43.11, lon: 12.38, focus: ["Lignin", "Nanocomposites"], keyInfo: "Research on lignin-based nanocomposites.", iconType: 'university' }, // NEW
+            { name: "University of Rome “Tor Vergata”", type: "University", city: "Rome", country: "IT", lat: 41.85, lon: 12.61, focus: ["Antimicrobial Research"], keyInfo: "Collaboration on antimicrobial research involving DFP derivatives.", iconType: 'university' }, // NEW
+            { name: "Università degli Studi Mediterranea di Reggio Calabria", type: "University", city: "Reggio Calabria", country: "IT", lat: 38.11, lon: 15.64, focus: ["Catalysis", "Waste Valorization"], keyInfo: "Research on heterogeneous catalysis for waste valorization.", iconType: 'university' }, // NEW
 
             // ES Universities & Institutes
             { name: "Autonomous University of Madrid (UAM)", type: "University", city: "Madrid", country: "ES", lat: 40.54, lon: -3.69, focus: ["Nanotech"], keyInfo: "#1 Nanotech ES.", iconType: 'university' },
@@ -409,6 +429,7 @@
             { name: "CINN (CSIC)", type: "Institute", city: "El Entrego, Asturias", country: "ES", lat: 43.29, lon: -5.68, focus: ["Nanomaterials", "Characterization", "Biotesting"], keyInfo: "Nanomaterials & Nanotechnology Research Center.", iconType: 'institute' },
             { name: "AIMEN", type: "Institute", city: "O Porriño, Galicia", country: "ES", lat: 42.16, lon: -8.62, focus: ["Materials Processing"], keyInfo: "Technological Centre. BIOMAC partner (PL15).", iconType: 'institute' },
             { name: "CIB Margarita Salas (CSIC)", type: "Institute", city: "Madrid", country: "ES", lat: 40.44, lon: -3.71, focus: ["Biotechnology", "Lignin", "Enzymes"], keyInfo: "Biological Research Center. Known work on lignin-degrading enzymes.", iconType: 'institute' },
+            { name: "BCMaterials", type: "Institute", city: "Leioa", country: "ES", lat: 43.32, lon: -2.99, focus: ["Nanocomposites", "Lignin", "Nanochitin", "LCA"], keyInfo: "Basque Center for Materials. Associated with UPV/EHU.", iconType: 'institute' }, // NEW
 
             // FI Universities & Institutes
             { name: "Aalto University", type: "University", city: "Espoo", country: "FI", lat: 60.18, lon: 24.83, focus: ["Cellulose", "Lignin", "Chitin", "Mechanochemistry", "Pickering Emulsions"], keyInfo: "Bioproducts Chemistry (Österberg), Synthesis Tech (Kaabel). FinnCERES. BioELCell (Rojas). LNP compatibilizers. Industry collaboration (Kemira).", iconType: 'university' },
@@ -420,11 +441,16 @@
             // AT Universities & Institutes
             { name: "BOKU University Vienna", type: "University", city: "Vienna / Tulln", country: "AT", lat: 48.23, lon: 16.33, focus: ["Lignin", "Cellulose", "Wood Chemistry", "Biorefining", "Composites"], keyInfo: "Inst. Chemistry of Renewable Resources (Prof. Rosenau). ALICE Core Facility.", iconType: 'university' },
             { name: "Energieinstitut JKU Linz", type: "Institute", city: "Linz", country: "AT", lat: 48.33, lon: 14.32, focus: ["Energy", "Biorefining"], keyInfo: "Partner in CHI-BIO project.", iconType: 'institute' },
+            { name: "Graz University of Technology (TU Graz)", type: "University", city: "Graz", country: "AT", lat: 47.07, lon: 15.43, focus: ["Polysaccharides", "Biobased Systems"], keyInfo: "Host/Organizer EPNOE 2023 conference.", iconType: 'university' }, // NEW
+            { name: "University of Graz (UNI Graz)", type: "University", city: "Graz", country: "AT", lat: 47.07, lon: 15.43, focus: ["Polysaccharides"], keyInfo: "Part of Austrian University Consortium organizing EPNOE 2023.", iconType: 'university' }, // NEW
+            { name: "University of Innsbruck (UNI Innsbruck)", type: "University", city: "Innsbruck", country: "AT", lat: 47.26, lon: 11.40, focus: ["Polysaccharides"], keyInfo: "Part of Austrian University Consortium organizing EPNOE 2023.", iconType: 'university' }, // NEW
+            { name: "University of Vienna (UNI Vienna)", type: "University", city: "Vienna", country: "AT", lat: 48.20, lon: 16.37, focus: ["Polysaccharides"], keyInfo: "Part of Austrian University Consortium organizing EPNOE 2023.", iconType: 'university' }, // NEW
 
             // IE Universities & Institutes
             { name: "Trinity College Dublin (TCD) - CRANN / AMBER", type: "University", city: "Dublin", country: "IE", lat: 53.34, lon: -6.25, focus: ["Nanoscience", "Materials", "Bioengineering", "Microscopy"], keyInfo: "Leading nanoscience institute. AMBER SFI Centre. Advanced Microscopy Lab. Nanotechnology #1 IE.", iconType: 'university' },
             { name: "Technological University Dublin (TU Dublin) - Nanolab", type: "University", city: "Dublin", country: "IE", lat: 53.35, lon: -6.27, focus: ["Nanomaterial Characterization", "Nano-bio Interactions"], keyInfo: "Specialized characterization facilities.", iconType: 'university' },
             { name: "Atlantic Technological University (ATU) Donegal", type: "University", city: "Letterkenny", country: "IE", lat: 54.95, lon: -7.73, focus: ["Chitin (Implied)"], keyInfo: "Formerly Letterkenny IT. Partner in FP7 CHI-BIO.", iconType: 'university' },
+            { name: "Smart Reactors", type: "Company", city: "Dublin", country: "IE", lat: 53.34, lon: -6.26, focus: ["Medtech", "Nanocellulose"], keyInfo: "Leading CellMembrane Horizon Europe project (nanocellulose artificial lung). (Location approx.)", iconType: 'company' }, // NEW
 
              // BE Universities & Institutes
             { name: "KU Leuven", type: "University", city: "Leuven", country: "BE", lat: 50.88, lon: 4.70, focus: ["Polymers", "Materials Science", "Cellulose"], keyInfo: "Strong materials/polymer science groups, cellulose research.", iconType: 'university' },
@@ -437,6 +463,7 @@
             { name: "NOVA School of Science and Technology", type: "University", city: "Lisbon area (Caparica)", country: "PT", lat: 38.66, lon: -9.20, focus: ["Materials Science", "Biomaterials", "Nanotech"], keyInfo: "Materials research center (CENIMAT/I3N).", iconType: 'university' },
             { name: "Instituto de Soldadura e Qualidade (ISQ)", type: "Institute", city: "Lisbon (Oeiras)", country: "PT", lat: 38.70, lon: -9.30, focus: ["Testing", "QA", "Process Dev."], keyInfo: "Partner in BIOMAC. Technical testing & quality assurance.", iconType: 'institute' },
             { name: "ANI - Agência Nacional de Inovação, SA", type: "Institute", city: "Lisbon / Porto", country: "PT", lat: 38.72, lon: -9.14, focus: ["Innovation Funding"], keyInfo: "National innovation agency. Eurostars/Innowwide coordination.", iconType: 'institute' },
+            { name: "University of Coimbra", type: "University", city: "Coimbra", country: "PT", lat: 40.21, lon: -8.41, focus: ["Chitosan", "Nanoparticles", "Immunotoxicity"], keyInfo: "Research on immunotoxicity of chitosan nanoparticles.", iconType: 'university' }, // NEW
 
             // CZ Universities & Institutes
             { name: "Technical University of Liberec", type: "University", city: "Liberec", country: "CZ", lat: 50.77, lon: 15.05, focus: ["Nanofibers", "Textiles", "Materials"], keyInfo: "Faculty of Textile Engineering. Known for nanofiber research.", iconType: 'university' },
@@ -478,6 +505,10 @@
 
             // DK Institutes
             { name: "Danish Technological Institute (DTI)", type: "Institute", city: "Taastrup", country: "DK", lat: 55.65, lon: 12.29, focus: ["Technology", "Materials"], keyInfo: "BIOMAC partner (PL16). Broad technology expertise.", iconType: 'institute' },
+
+            // TR Universities
+            { name: "Amasya University Research Laboratory Center", type: "University", city: "Amasya", country: "TR", lat: 40.65, lon: 35.83, focus: ["Chitosan", "Nanoparticles", "Vaccine Delivery"], keyInfo: "Research on chitosan nanoparticles for vaccine delivery.", iconType: 'university' }, // NEW
+            { name: "Ondokuz Mayis University Medical School", type: "University", city: "Samsun", country: "TR", lat: 41.28, lon: 36.33, focus: ["Chitosan", "Nanoparticles", "Vaccine Delivery"], keyInfo: "Research on chitosan nanoparticles for vaccine delivery.", iconType: 'university' }, // NEW
 
             // Pan-European Institutes/Networks
             { name: "JRC Nanobiotechnology Laboratory", type: "Institute", city: "Ispra", country: "IT", lat: 45.81, lon: 8.63, focus: ["Nano/Bio Characterization"], keyInfo: "EU Commission Joint Research Centre. Open access.", iconType: 'institute' },
@@ -787,6 +818,3 @@
     </script>
 </body>
 </html>
-
-
-
