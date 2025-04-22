@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>European Landscape: Bio-Based Nanomaterials (Full Data)</title>
+    <title>European Landscape: Bio-Based Nanomaterials (Corrected Colors, Square Icons)</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
@@ -13,53 +13,171 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        /* CSS Variables for modern theme */
         :root {
             --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            --bg-color: #f8f9fa; --map-bg-color: #e9ecef; --border-color: #ced4da;
-            --text-color: #495057; --title-color: #588157; --popup-bg: #ffffff;
-            --popup-border: #dee2e6; --popup-title-color: #588157; --popup-section-header: #a3b18a;
-            --link-color: #3a5a40; --placeholder-color: #6c757d; --legend-bg: #ffffff; --legend-border: #dee2e6;
-            --uni-color-hex: '42a5f5'; --inst-color-hex: '66bb6a'; --comp-color-hex: 'ab47bc';
-            --pilot-color-hex: 'ffa726'; --network-color-hex: 'ec407a'; --other-color-hex: '8c96a0';
+            --bg-color: #f4f7f6;
+            --map-bg-color: #e8ecef;
+            --border-color: #d1d9e0;
+            --text-color: #333d47;
+            --title-color: #2c6e49;
+            --popup-bg: #ffffff;
+            --popup-border: #e1e5ea;
+            --popup-title-color: #2c6e49;
+            --popup-section-header: #4c956c;
+            --link-color: #1b4332;
+            --placeholder-color: #6c757d;
+            --legend-bg: rgba(255, 255, 255, 0.95);
+            --legend-border: #d1d9e0;
+
+            /* New Modern Color Palette - Hex codes WITHOUT quotes */
+            --uni-color-hex: 2196F3;   /* Blue */
+            --inst-color-hex: 4CAF50;  /* Green */
+            --comp-color-hex: 9C27B0;  /* Purple */
+            --pilot-color-hex: FF9800; /* Orange */
+            --network-color-hex: E91E63;/* Pink */
+            --other-color-hex: 607D8B; /* Blue Grey */
         }
-        body { font-family: var(--font-family); margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
-        h1 { margin: 30px 10px 15px 10px; color: var(--title-color); text-align: center; font-weight: 600; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; width: 90%; max-width: 1100px; font-size: 2em; letter-spacing: -0.5px; }
-        .disclaimer { font-size: 0.75em; color: var(--placeholder-color); width: 90%; max-width: 1100px; text-align: center; margin-bottom: 25px; border: 1px solid var(--popup-border); padding: 10px; background-color: var(--popup-bg); border-radius: 4px; }
-        #map { height: 78vh; width: 98%; max-width: 1800px; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); margin-bottom: 25px; background-color: var(--map-bg-color); }
-        .legend { font-size: 0.8em; padding: 12px 18px; background-color: var(--legend-bg); border: 1px solid var(--legend-border); border-radius: 8px; margin-bottom: 30px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-        .legend h4 { margin: 0 0 10px 0; font-size: 0.85em; color: var(--popup-section-header); text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid var(--popup-border); padding-bottom: 6px; font-weight: 600; }
-        .legend div { margin-bottom: 5px; display: flex; align-items: center;}
-        .legend span { display: inline-block; width: 15px; height: 15px; margin-right: 10px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); flex-shrink: 0; }
-        .leaflet-control-container .leaflet-control { box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 6px; border: 1px solid var(--border-color); }
-        .leaflet-control-layers { background-color: rgba(255,255,255,0.95); backdrop-filter: blur(5px); border-radius: 6px; padding: 10px; max-height: 65vh; overflow-y: auto; }
-        .leaflet-control-layers-base label, .leaflet-control-layers-overlays label { color: var(--text-color); font-size: 0.9em; display: flex; align-items: center; margin-bottom: 5px; cursor: pointer; font-weight: 500; }
-        .leaflet-control-layers-overlays label span { margin-left: 8px; }
-        .leaflet-control-layers-separator { border-top: 1px solid var(--popup-border); margin: 8px -10px; }
-        .layer-control-icon { width: 14px; height: 14px; margin-right: 0; border-radius: 50%; border: 1px solid rgba(0,0,0,0.2); vertical-align: middle; flex-shrink: 0; }
-        .leaflet-popup { transition: opacity 0.3s ease-out, transform 0.3s ease-out; }
-        .leaflet-popup-content-wrapper { border-radius: 8px; background-color: var(--popup-bg); border: 1px solid var(--popup-border); box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; }
-        .leaflet-popup-content { font-size: 0.9em; line-height: 1.6; color: var(--text-color); max-height: 400px; overflow-y: auto; padding: 0; }
-        .leaflet-popup-content b.popup-title { font-size: 1.15em; color: var(--popup-title-color); font-weight: 600; display: block; margin: 0; padding: 12px 18px; border-bottom: 1px solid var(--popup-border); background-color: #f8f9fa; }
-        .popup-section { margin: 0; padding: 10px 18px; border-top: 1px solid #f1f1f1; }
+        /* Basic body and layout styles */
+        body {
+            font-family: var(--font-family); margin: 0; padding: 0; display: flex;
+            flex-direction: column; align-items: center; background-color: var(--bg-color);
+            color: var(--text-color); line-height: 1.6;
+        }
+        h1 {
+            margin: 30px 10px 15px 10px; color: var(--title-color); text-align: center;
+            font-weight: 600; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;
+            width: 90%; max-width: 1100px; font-size: 1.8em; letter-spacing: -0.2px;
+        }
+        .disclaimer {
+            font-size: 0.75em; color: var(--placeholder-color); width: 90%; max-width: 1100px;
+            text-align: center; margin-bottom: 25px; border: 1px solid var(--popup-border);
+            padding: 10px; background-color: var(--popup-bg); border-radius: 6px;
+        }
+        /* Map container style */
+        #map {
+            height: 78vh; width: 98%; max-width: 1800px; border: 1px solid var(--border-color);
+            border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            margin-bottom: 25px; background-color: var(--map-bg-color);
+        }
+        /* Legend styles */
+        .legend {
+            font-size: 0.8em; padding: 12px 18px; background-color: var(--legend-bg);
+            border: 1px solid var(--legend-border); border-radius: 8px; margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08); backdrop-filter: blur(4px);
+        }
+        .legend h4 {
+            margin: 0 0 10px 0; font-size: 0.85em; color: var(--popup-section-header);
+            text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid var(--popup-border);
+            padding-bottom: 6px; font-weight: 600;
+        }
+        .legend div { margin-bottom: 6px; display: flex; align-items: center; }
+        .legend div:last-child { margin-bottom: 0; }
+        .legend img.legend-icon { /* Style for the icon image */
+            width: 18px; height: 18px; margin-right: 8px;
+            vertical-align: middle; flex-shrink: 0;
+            border: 1px solid rgba(0,0,0,0.1); border-radius: 2px;
+        }
+        /* Leaflet control styles */
+        .leaflet-control-container .leaflet-control {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        .leaflet-control-layers {
+            background-color: rgba(255,255,255,0.95); backdrop-filter: blur(5px);
+            border-radius: 6px; padding: 10px; max-height: 65vh; overflow-y: auto;
+        }
+        .leaflet-control-layers-base label,
+        .leaflet-control-layers-overlays label {
+            color: var(--text-color); font-size: 0.9em; display: flex;
+            align-items: center; margin-bottom: 5px; cursor: pointer; font-weight: 500;
+        }
+         /* Style for icons in layer control */
+        img.layer-control-icon {
+            width: 16px; height: 16px; margin-right: 8px;
+            vertical-align: middle; flex-shrink: 0;
+            border: 1px solid rgba(0,0,0,0.1); border-radius: 2px;
+        }
+        .leaflet-control-layers-separator {
+            border-top: 1px solid var(--popup-border); margin: 8px -10px;
+        }
+        /* Leaflet popup styles - Modernized */
+        .leaflet-popup { transition: opacity 0.2s ease-out, transform 0.2s ease-out; }
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px; background-color: var(--popup-bg); border: 1px solid var(--popup-border);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden;
+        }
+        .leaflet-popup-content {
+            font-size: 0.9em; line-height: 1.6; color: var(--text-color);
+            max-height: 400px; overflow-y: auto; padding: 0;
+        }
+        .leaflet-popup-content b.popup-title {
+            font-size: 1.1em; color: var(--popup-title-color); font-weight: 600;
+            display: block; margin: 0; padding: 14px 20px;
+            border-bottom: 1px solid var(--popup-border); background-color: #f9fafb;
+        }
+        .popup-section {
+            margin: 0; padding: 12px 20px; border-top: 1px solid #f1f3f5;
+        }
         .popup-section:first-of-type { border-top: none; }
-        .popup-section h4 { margin: 0 0 5px 0; font-size: 0.75em; color: var(--popup-section-header); font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; }
-        .popup-section .content-text { font-size: 0.9em; margin: 0; display: block; }
-        .popup-section .content-text.focus { font-weight: 600; color: var(--title-color); }
+        .popup-section h4 {
+            margin: 0 0 6px 0; font-size: 0.7em; color: var(--popup-section-header);
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px;
+        }
+        .popup-section .content-text { font-size: 0.88em; margin: 0 0 4px 0; display: block; }
+        .popup-section .content-text:last-child { margin-bottom: 0; }
+        .popup-section .content-text.focus { font-weight: 500; color: var(--title-color); }
         .popup-section .content-text.location { color: #555; }
-        .popup-section .content-text.info { color: #333; }
-        .popup-section a { color: var(--link-color); text-decoration: none; font-size: 0.85em; display: inline-block; margin-top: 6px; font-weight: 600; }
-        .popup-section a:hover { text-decoration: underline; }
+        .popup-section .content-text.info { color: #444; }
+        .popup-section a {
+            color: var(--link-color); text-decoration: none; font-size: 0.85em;
+            display: inline-block; margin-top: 8px; font-weight: 600;
+            padding: 4px 8px; border-radius: 4px; transition: background-color 0.2s ease;
+        }
+        .popup-section a:hover { text-decoration: none; background-color: #e9f5db; }
         .leaflet-popup-tip-container { width: 20px; height: 10px; }
         .leaflet-popup-tip { box-shadow: none; }
-        .leaflet-tooltip { border-radius: 4px; background-color: rgba(58, 90, 64, 0.9); color: #fff; border: none; box-shadow: 0 1px 4px rgba(0,0,0,0.2); padding: 6px 10px; font-size: 0.9em; font-weight: 500; }
-        .marker-cluster div { color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.6); width: 32px; height: 32px; margin-left: 5px; margin-top: 5px; text-align: center; border-radius: 16px; font: 13px var(--font-family); font-weight: 600; line-height: 32px; }
-        .marker-cluster-small { background-color: rgba(163, 177, 138, 0.8); } .marker-cluster-small div { background-color: rgba(131, 197, 190, 0.9); }
-        .marker-cluster-medium { background-color: rgba(212, 163, 115, 0.8); } .marker-cluster-medium div { background-color: rgba(168, 129, 90, 0.9); }
-        .marker-cluster-large { background-color: rgba(88, 129, 87, 0.8); } .marker-cluster-large div { background-color: rgba(58, 90, 64, 0.9); }
-        .leaflet-control-custom { background-color: white; border: 1px solid var(--border-color); border-radius: 6px; width: 34px; height: 34px; text-align: center; line-height: 34px; cursor: pointer; font-weight: bold; font-size: 1.5em; color: #555; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-        .leaflet-control-custom:hover { background-color: #f4f4f4; color: #111; }
-        .marker-hover { transform: scale(1.15); z-index: 1000 !important; }
-        .leaflet-marker-icon { transition: transform 0.15s ease-out; }
+
+        /* Leaflet tooltip styles - Modernized */
+        .leaflet-tooltip {
+            border-radius: 5px; background-color: rgba(40, 40, 40, 0.85); color: #fff;
+            border: none; box-shadow: 0 1px 5px rgba(0,0,0,0.2); padding: 5px 10px;
+            font-size: 0.85em; font-weight: 500; backdrop-filter: blur(2px);
+        }
+
+        /* Marker cluster styles - Use modern theme colors */
+        .marker-cluster div {
+            color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5); width: 30px; height: 30px;
+            margin-left: 5px; margin-top: 5px; text-align: center; border-radius: 15px;
+            font: 12px var(--font-family); font-weight: 600; line-height: 30px;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        }
+        .marker-cluster-small { background-color: rgba(76, 175, 80, 0.7); } /* Green */
+        .marker-cluster-small div { background-color: rgba(76, 175, 80, 0.9); }
+        .marker-cluster-medium { background-color: rgba(255, 152, 0, 0.7); } /* Orange */
+        .marker-cluster-medium div { background-color: rgba(255, 152, 0, 0.9); }
+        .marker-cluster-large { background-color: rgba(33, 150, 243, 0.7); } /* Blue */
+        .marker-cluster-large div { background-color: rgba(33, 150, 243, 0.9); }
+
+        /* Custom control styles (Recenter button) */
+        .leaflet-control-custom {
+            background-color: white; border: 1px solid var(--border-color); border-radius: 6px;
+            width: 34px; height: 34px; text-align: center; line-height: 34px; cursor: pointer;
+            font-weight: bold; font-size: 1.5em; color: #555;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08); transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .leaflet-control-custom:hover { background-color: #f1f3f5; color: #111; }
+
+        /* Marker hover effect */
+        .marker-hover {
+            transform: scale(1.15);
+            z-index: 1000 !important;
+        }
+        /* Apply transition to the marker icon itself */
+        .leaflet-marker-icon {
+            transition: transform 0.15s ease-out;
+        }
+
     </style>
 </head>
 <body>
@@ -70,35 +188,75 @@
     <div id="map"></div>
     <div class="legend">
         <h4>Legend</h4>
-        <div><span style="background-color: #42a5f5;"></span> University</div>
-        <div><span style="background-color: #66bb6a;"></span> Research Institute / RTO</div>
-        <div><span style="background-color: #ab47bc;"></span> Company</div>
-        <div><span style="background-color: #ffa726;"></span> Pilot Plant / Facility</div>
-        <div><span style="background-color: #ec407a;"></span> Network / Association</div>
-        <div><span style="background-color: #8c96a0;"></span> Other / Unspecified</div>
+        <div><img src="https://placehold.co/32x32/2196F3/FFFFFF?text=UNI&font=lato" alt="University Icon" class="legend-icon"> University</div>
+        <div><img src="https://placehold.co/32x32/4CAF50/FFFFFF?text=INST&font=lato" alt="Institute Icon" class="legend-icon"> Research Institute / RTO</div>
+        <div><img src="https://placehold.co/32x32/9C27B0/FFFFFF?text=CO&font=lato" alt="Company Icon" class="legend-icon"> Company</div>
+        <div><img src="https://placehold.co/32x32/FF9800/FFFFFF?text=PILOT&font=lato" alt="Pilot Plant Icon" class="legend-icon"> Pilot Plant / Facility</div>
+        <div><img src="https://placehold.co/32x32/E91E63/FFFFFF?text=NET&font=lato" alt="Network Icon" class="legend-icon"> Network / Association</div>
+        <div><img src="https://placehold.co/32x32/607D8B/FFFFFF?text=?&font=lato" alt="Other Icon" class="legend-icon"> Other / Unspecified</div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <script>
-        const map = L.map('map', { center: [50.0, 10.0], zoom: 5, worldCopyJump: true });
+        // Initialize the map
+        const map = L.map('map', {
+            center: [50.0, 10.0], // Initial center of Europe
+            zoom: 5,             // Initial zoom level
+            worldCopyJump: true  // Prevents markers from duplicating when panning across the date line
+        });
 
-        const osmTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OSM contributors', maxZoom: 18 });
-        const stamenTonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', { attribution: 'Stamen Toner Lite', subdomains: 'abcd', maxZoom: 20, ext: 'png' });
-        const cartoPositron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OSM contributors &copy; CARTO', subdomains: 'abcd', maxZoom: 20 });
-        cartoPositron.addTo(map);
+        // --- Tile Layers ---
+        const osmTile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 18 });
+        const stamenTonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            subdomains: 'abcd', maxZoom: 20, ext: 'png' });
+        const cartoPositron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd', maxZoom: 20 });
+        cartoPositron.addTo(map); // Add default layer
 
-        const iconSize = [32, 32], iconAnchor = [16, 32], popupAnchor = [0, -34];
-        const createIcon = (hexColor, text) => L.icon({ iconUrl: `https://placehold.co/${iconSize[0]}x${iconSize[1]}/${hexColor}/FFFFFF?text=${encodeURIComponent(text)}&font=lato`, iconSize: iconSize, iconAnchor: iconAnchor, popupAnchor: popupAnchor });
+        // --- Custom Icons using placehold.co (Square Style with MODERN Colors) ---
+        const iconWidth = 32;
+        const iconHeight = 32;
+        const iconAnchor = [iconWidth / 2, iconHeight];
+        const popupAnchor = [0, -iconHeight + 4];
+
+        // Function to create icons using placehold.co service
+        const createIcon = (hexColor, text) => L.icon({
+            iconUrl: `https://placehold.co/${iconWidth}x${iconHeight}/${hexColor}/FFFFFF?text=${encodeURIComponent(text)}&font=lato`,
+            iconSize: [iconWidth, iconHeight],
+            iconAnchor: iconAnchor,
+            popupAnchor: popupAnchor,
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+            shadowSize: [41, 41],
+            shadowAnchor: [iconWidth / 2 - 1, 41]
+        });
+
+        // Get MODERN hex codes from CSS variables (trim whitespace)
+        const styles = getComputedStyle(document.documentElement);
+        const uniHex = styles.getPropertyValue('--uni-color-hex').trim();
+        const instHex = styles.getPropertyValue('--inst-color-hex').trim();
+        const compHex = styles.getPropertyValue('--comp-color-hex').trim();
+        const pilotHex = styles.getPropertyValue('--pilot-color-hex').trim();
+        const networkHex = styles.getPropertyValue('--network-color-hex').trim();
+        const otherHex = styles.getPropertyValue('--other-color-hex').trim();
+
+        // Define icons for different entity types using the MODERN hex codes
         const icons = {
-            university: createIcon('42a5f5', 'UNI'), institute: createIcon('66bb6a', 'INST'),
-            company: createIcon('ab47bc', 'CO'), pilot_plant: createIcon('ffa726', 'PILOT'),
-            network: createIcon('ec407a', 'NET'), other: createIcon('8c96a0', '?')
+            university: createIcon(uniHex, 'UNI'),
+            institute: createIcon(instHex, 'INST'),
+            company: createIcon(compHex, 'CO'),
+            pilot_plant: createIcon(pilotHex, 'PILOT'),
+            network: createIcon(networkHex, 'NET'),
+            other: createIcon(otherHex, '?')
         };
 
-        // --- Comprehensive Data Source (Extracted from Full Report) ---
+
+        // --- Comprehensive Data Source (Unchanged) ---
         const entitiesData = [
-            // UK Universities
+             // UK Universities
             { name: "University of Cambridge", type: "University", city: "Cambridge", country: "UK", lat: 52.20, lon: 0.12, focus: ["Materials Science", "Nanotech"], keyInfo: "#1 Materials Science Europe, #1 Nanotech UK.", iconType: 'university' },
             { name: "University of Manchester", type: "University", city: "Manchester", country: "UK", lat: 53.46, lon: -2.23, focus: ["Nanotech", "Advanced Materials"], keyInfo: "#2 Nanotech UK. MSc Advanced Materials.", iconType: 'university' },
             { name: "Imperial College London", type: "University", city: "London", country: "UK", lat: 51.50, lon: -0.17, focus: ["Nanotech"], keyInfo: "#3 Nanotech UK.", iconType: 'university' },
@@ -141,6 +299,7 @@
             { name: "Chalmers University of Technology", type: "University", city: "Gothenburg", country: "SE", lat: 57.69, lon: 11.97, focus: ["Nanotech", "Materials Engineering"], keyInfo: "#3 Nanotech SE. MSc Nanotechnology, Materials Engineering.", iconType: 'university' },
             { name: "Lund University", type: "University", city: "Lund", country: "SE", lat: 55.71, lon: 13.20, focus: ["Nanotech"], keyInfo: "#4 Nanotech SE.", iconType: 'university' },
             { name: "Luleå University of Technology (LTU)", type: "University", city: "Luleå", country: "SE", lat: 65.61, lon: 22.14, focus: ["Lignin", "Wood Chemistry", "Biomass Processing"], keyInfo: "BIOMAC partner (PL1). Research on lignin extraction.", iconType: 'university' },
+            { name: "University of Stockholm", type: "University", city: "Stockholm", country: "SE", lat: 59.36, lon: 18.06, focus: ["General Research", "Natural Sciences"], keyInfo: "Major Swedish university.", iconType: 'university' }, // ADDED
             { name: "RISE Research Institutes of Sweden", type: "Institute", city: "Stockholm / Örnsköldsvik / etc.", country: "SE", lat: 59.33, lon: 18.06, focus: ["Lignin", "Cellulose (CNF/CNC)"], keyInfo: "LignoBoost/LignoDemo. Nanocellulose pilot plants (MFC/CNC). BIOMAC (PL2).", iconType: 'institute' },
             { name: "RISE Processum", type: "Institute", city: "Örnsköldsvik", country: "SE", lat: 63.29, lon: 18.71, focus: ["Biorefinery"], keyInfo: "Biorefinery R&D. BIOMAC partner.", iconType: 'institute' },
             { name: "LignoCity", type: "Pilot Plant", city: "Bäckhammar", country: "SE", lat: 59.16, lon: 14.13, focus: ["Lignin"], keyInfo: "Open testbed for lignin valorization. Hosts RISE & Lixea pilot.", iconType: 'pilot_plant' },
@@ -171,6 +330,7 @@
             { name: "University of Padua", type: "University", city: "Padua", country: "IT", lat: 45.41, lon: 11.88, focus: ["General Biobased"], keyInfo: "BIOMAC partner.", iconType: 'university' },
             { name: "University of Modena and Reggio Emilia (UNIMORE)", type: "University", city: "Modena", country: "IT", lat: 44.64, lon: 10.92, focus: ["Biowaste", "Chitin"], keyInfo: "Partner in SCALIBUR project.", iconType: 'university' },
             { name: "University of Pisa", type: "University", city: "Pisa", country: "IT", lat: 43.72, lon: 10.40, focus: ["Biotechnology", "Plastic Degradation"], keyInfo: "Partner in RECOVER project.", iconType: 'university' },
+            { name: "University of Bari Aldo Moro", type: "University", city: "Bari", country: "IT", lat: 41.11, lon: 16.87, focus: ["General Research", "Chemistry", "Physics", "Biotech"], keyInfo: "Major university in Southern Italy. #13 Nanotech IT (approx.).", iconType: 'university' }, // ADDED
             { name: "JRC Nanobiotechnology Laboratory", type: "Institute", city: "Ispra", country: "IT", lat: 45.81, lon: 8.63, focus: ["Nano/Bio Characterization"], keyInfo: "EU Commission Joint Research Centre. Open access.", iconType: 'institute' },
 
             // ES Universities & Institutes
@@ -348,12 +508,11 @@
             { name: "ZCPP SR (Assoc. Slovak Pulp & Paper Ind.)", type: "Network", city: "Bratislava?", country: "SK", lat: 48.15, lon: 17.11, focus: ["Industry Association"], keyInfo: "National CEPI member.", iconType: 'network' },
         ];
 
-        // --- Data Processing & Merging ---
+        // --- Data Processing & Merging (Optional Deduplication) ---
         const combinedEntitiesMap = new Map();
-        // Use a more specific key including type for deduplication
         const getEntityKey = entity => `${entity.name.toLowerCase().trim()}_${entity.city.toLowerCase().trim()}_${entity.type.toLowerCase().trim()}`;
         entitiesData.forEach(entity => {
-            if (entity && entity.name && entity.city && entity.type) { // Basic check for key components
+            if (entity && entity.name && entity.city && entity.type) {
                  combinedEntitiesMap.set(getEntityKey(entity), entity);
             } else {
                 console.warn("Skipping entity due to missing key component:", entity);
@@ -362,70 +521,108 @@
         const finalEntities = Array.from(combinedEntitiesMap.values());
 
         // --- Marker and Layer Creation ---
-        const markers = L.markerClusterGroup({ maxClusterRadius: 55, spiderfyOnMaxZoom: true, showCoverageOnHover: false, zoomToBoundsOnClick: true });
-        const layers = { university: L.layerGroup(), institute: L.layerGroup(), company: L.layerGroup(), pilot_plant: L.layerGroup(), network: L.layerGroup(), other: L.layerGroup() };
+        const markers = L.markerClusterGroup({
+            maxClusterRadius: 55, spiderfyOnMaxZoom: true, showCoverageOnHover: false, zoomToBoundsOnClick: true,
+            iconCreateFunction: function(cluster) { // Custom cluster icons
+                const count = cluster.getChildCount();
+                let size = 'small';
+                if (count > 10) size = 'medium';
+                if (count > 25) size = 'large';
+                const className = `marker-cluster marker-cluster-${size}`;
+                return L.divIcon({ html: `<div><span>${count}</span></div>`, className: className, iconSize: L.point(40, 40) });
+            }
+        });
+        const layers = {
+            university: L.layerGroup(), institute: L.layerGroup(), company: L.layerGroup(),
+            pilot_plant: L.layerGroup(), network: L.layerGroup(), other: L.layerGroup()
+        };
 
+        // Function to create the HTML content for the popups (Modernized Style)
         const createPopupContent = entity => `
             <b class="popup-title">${entity.name}</b>
             <div class="popup-section">
                  <span class="content-text location"><strong>Type:</strong> ${entity.type}</span>
                  <span class="content-text location"><strong>Location:</strong> ${entity.city}, ${entity.country}</span>
             </div>
-            <div class="popup-section">
+            ${entity.focus ? `<div class="popup-section">
                  <h4>Focus Areas:</h4>
-                 <span class="content-text focus">${Array.isArray(entity.focus) ? entity.focus.join(', ') : (entity.focus || 'N/A')}</span>
-            </div>
-            <div class="popup-section">
+                 <span class="content-text focus">${Array.isArray(entity.focus) ? entity.focus.join(', ') : entity.focus}</span>
+            </div>` : ''}
+            ${entity.keyInfo ? `<div class="popup-section">
                  <h4>Key Information / Notes:</h4>
-                 <span class="content-text info">${entity.keyInfo || 'N/A'}</span>
-            </div>
+                 <span class="content-text info">${entity.keyInfo}</span>
+            </div>` : ''}
             <div class="popup-section">
-                 <a href="https://www.google.com/search?q=${encodeURIComponent(entity.name + ' ' + entity.city + ' ' + entity.country)}" target="_blank" rel="noopener noreferrer">Search Online...</a>
+                 <a href="https://www.google.com/search?q=${encodeURIComponent(entity.name + ' ' + entity.city + ' ' + entity.country)}" target="_blank" rel="noopener noreferrer">Search Online &rarr;</a>
             </div>`;
 
+        // Loop through each entity in the final data array
         finalEntities.forEach(entity => {
-            if (typeof entity.lat !== 'number' || typeof entity.lon !== 'number') {
-                console.warn("Skipping entity due to invalid coordinates:", entity);
-                return; // Skip if coordinates are missing or invalid
+            if (typeof entity.lat !== 'number' || typeof entity.lon !== 'number' || isNaN(entity.lat) || isNaN(entity.lon)) {
+                console.warn("Skipping entity due to invalid or missing coordinates:", entity);
+                return;
             }
             const iconType = entity.iconType || 'other';
-            const marker = L.marker([entity.lat, entity.lon], { icon: icons[iconType] || icons.other, alt: entity.name })
-                .bindPopup(createPopupContent(entity), { maxWidth: 400 })
-                .bindTooltip(entity.name);
+            const marker = L.marker([entity.lat, entity.lon], {
+                icon: icons[iconType] || icons.other, // Use specific square icon or default
+                alt: entity.name
+            })
+            .bindPopup(createPopupContent(entity), { maxWidth: 380 })
+            .bindTooltip(entity.name);
 
-            marker.on('mouseover', function (e) { this.getElement()?.classList.add('marker-hover'); });
-            marker.on('mouseout', function (e) { this.getElement()?.classList.remove('marker-hover'); });
+            // Add hover effect for square icons
+            marker.on('mouseover', function (e) {
+                const element = this.getElement();
+                if (element) element.classList.add('marker-hover');
+            });
+            marker.on('mouseout', function (e) {
+                 const element = this.getElement();
+                 if (element) element.classList.remove('marker-hover');
+            });
 
             const targetLayer = layers[iconType] || layers.other;
             targetLayer.addLayer(marker);
+            // Add marker to the cluster group (except for networks)
             if (iconType !== 'network') {
                 markers.addLayer(marker);
+            } else {
+                 marker.addTo(map); // Add networks directly if not clustering
             }
         });
 
-        markers.addTo(map);
-        Object.values(layers).forEach(layer => layer.addTo(map)); // Add all layers for control
+        // Add the marker cluster group to the map
+        if (markers.getLayers().length > 0) { markers.addTo(map); }
+        // Add individual layers (except networks if added directly)
+        Object.keys(layers).forEach(key => {
+            // Add layer if it's not 'network' OR if it is 'network' but wasn't added directly above
+            if (key !== 'network' || layers[key].getLayers().length > 0) {
+                 layers[key].addTo(map);
+            }
+        });
+
 
         // --- Map Controls ---
         const baseMaps = { "Carto Positron": cartoPositron, "OpenStreetMap": osmTile, "Stamen Toner Lite": stamenTonerLite };
+        // Define overlay map options using square icons with MODERN colors
         const overlayMaps = {
-            [`<span class="layer-control-icon" style="background-color:#42a5f5;"></span><span> Universities (${layers.university.getLayers().length})</span>`]: layers.university,
-            [`<span class="layer-control-icon" style="background-color:#66bb6a;"></span><span> Institutes/RTOs (${layers.institute.getLayers().length})</span>`]: layers.institute,
-            [`<span class="layer-control-icon" style="background-color:#ab47bc;"></span><span> Companies (${layers.company.getLayers().length})</span>`]: layers.company,
-            [`<span class="layer-control-icon" style="background-color:#ffa726;"></span><span> Pilot Plants/Facilities (${layers.pilot_plant.getLayers().length})</span>`]: layers.pilot_plant,
-            [`<span class="layer-control-icon" style="background-color:#ec407a;"></span><span> Networks/Associations (${layers.network.getLayers().length})</span>`]: layers.network,
-            [`<span class="layer-control-icon" style="background-color:#8c96a0;"></span><span> Other (${layers.other.getLayers().length})</span>`]: layers.other
+            [`<img src="${icons.university.options.iconUrl}" alt="UNI" class="layer-control-icon"><span> Universities (${layers.university.getLayers().length})</span>`]: layers.university,
+            [`<img src="${icons.institute.options.iconUrl}" alt="INST" class="layer-control-icon"><span> Institutes/RTOs (${layers.institute.getLayers().length})</span>`]: layers.institute,
+            [`<img src="${icons.company.options.iconUrl}" alt="CO" class="layer-control-icon"><span> Companies (${layers.company.getLayers().length})</span>`]: layers.company,
+            [`<img src="${icons.pilot_plant.options.iconUrl}" alt="PILOT" class="layer-control-icon"><span> Pilot Plants/Facilities (${layers.pilot_plant.getLayers().length})</span>`]: layers.pilot_plant,
+            [`<img src="${icons.network.options.iconUrl}" alt="NET" class="layer-control-icon"><span> Networks/Associations (${layers.network.getLayers().length})</span>`]: layers.network,
+            [`<img src="${icons.other.options.iconUrl}" alt="?" class="layer-control-icon"><span> Other (${layers.other.getLayers().length})</span>`]: layers.other
         };
-        L.control.layers(baseMaps, overlayMaps, { collapsed: true, position: 'topright' }).addTo(map);
+        L.control.layers(baseMaps, overlayMaps, { collapsed: false, position: 'topright' }).addTo(map);
         L.control.scale({ imperial: false }).addTo(map);
 
+        // --- Custom Recenter Control ---
         L.Control.Recenter = L.Control.extend({
             options: { position: 'bottomleft' },
-            onAdd: map => {
+            onAdd: function (map) {
                 const btn = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
                 btn.innerHTML = '&#x21BA;'; btn.title = 'Center Map';
                 L.DomEvent.disableClickPropagation(btn);
-                btn.onclick = () => map.setView([50.0, 10.0], 5);
+                btn.onclick = function(e){ L.DomEvent.stop(e); map.setView([50.0, 10.0], 5); };
                 return btn;
             }
         });
@@ -434,4 +631,5 @@
     </script>
 </body>
 </html>
+
 
