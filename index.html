@@ -720,7 +720,7 @@
             [`<img src="${icons.network.options.iconUrl}" alt="NET" class="layer-control-icon"><span> Networks/Associations (${layers.network.getLayers().length})</span>`]: layers.network,
             [`<img src="${icons.other.options.iconUrl}" alt="?" class="layer-control-icon"><span> Other (${layers.other.getLayers().length})</span>`]: layers.other
         };
-        L.control.layers(baseMaps, overlayMaps, { collapsed: false, position: 'topright' }).addTo(map);
+        L.control.layers(baseMaps, overlayMaps, { collapsed: true, position: 'topright' }).addTo(map);
         L.control.scale({ imperial: false }).addTo(map);
 
         // --- Custom Recenter Control ---
