@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>European Landscape: Bio-Based Nanomaterials (Corrected Colors, Square Icons)</title>
+    <title>European Landscape: Bio-Based Nanomaterials (Search Added)</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
@@ -29,6 +29,10 @@
             --placeholder-color: #6c757d;
             --legend-bg: rgba(255, 255, 255, 0.95);
             --legend-border: #d1d9e0;
+            --button-bg: #4c956c;
+            --button-hover-bg: #3a7d53;
+            --input-border: #ced4da;
+            --input-focus-border: #4c956c;
 
             /* New Modern Color Palette - Hex codes WITHOUT quotes */
             --uni-color-hex: 2196F3;   /* Blue */
@@ -51,12 +55,62 @@
         }
         .disclaimer {
             font-size: 0.75em; color: var(--placeholder-color); width: 90%; max-width: 1100px;
-            text-align: center; margin-bottom: 25px; border: 1px solid var(--popup-border);
+            text-align: center; margin-bottom: 15px; /* Reduced margin */
+            border: 1px solid var(--popup-border);
             padding: 10px; background-color: var(--popup-bg); border-radius: 6px;
         }
+        /* Search Bar Styles */
+        .search-container {
+            display: flex;
+            gap: 8px; /* Space between input and button */
+            margin-bottom: 20px;
+            width: 90%;
+            max-width: 600px; /* Limit search bar width */
+        }
+        #search-input {
+            flex-grow: 1; /* Input takes available space */
+            padding: 10px 14px;
+            font-size: 0.95em;
+            border: 1px solid var(--input-border);
+            border-radius: 6px;
+            color: var(--text-color);
+            background-color: #fff;
+            transition: border-color 0.2s ease;
+        }
+        #search-input:focus {
+            outline: none;
+            border-color: var(--input-focus-border);
+            box-shadow: 0 0 0 2px rgba(76, 149, 108, 0.2); /* Subtle focus ring */
+        }
+        #search-button {
+            padding: 10px 18px;
+            font-size: 0.95em;
+            font-weight: 500;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        #search-button:hover {
+            background-color: var(--button-hover-bg);
+        }
+        #search-message {
+            font-size: 0.85em;
+            color: var(--placeholder-color);
+            height: 1.2em; /* Reserve space to prevent layout shift */
+            margin-top: -10px; /* Adjust spacing */
+            margin-bottom: 10px;
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
         /* Map container style */
         #map {
-            height: 78vh; width: 98%; max-width: 1800px; border: 1px solid var(--border-color);
+            height: 75vh; /* Slightly reduced height to accommodate search */
+            width: 98%; max-width: 1800px; border: 1px solid var(--border-color);
             border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);
             margin-bottom: 25px; background-color: var(--map-bg-color);
         }
@@ -85,7 +139,8 @@
         }
         .leaflet-control-layers {
             background-color: rgba(255,255,255,0.95); backdrop-filter: blur(5px);
-            border-radius: 6px; padding: 10px; max-height: 65vh; overflow-y: auto;
+            border-radius: 6px; padding: 10px; max-height: 60vh; /* Adjusted max height */
+             overflow-y: auto;
         }
         .leaflet-control-layers-base label,
         .leaflet-control-layers-overlays label {
@@ -109,7 +164,8 @@
         }
         .leaflet-popup-content {
             font-size: 0.9em; line-height: 1.6; color: var(--text-color);
-            max-height: 400px; overflow-y: auto; padding: 0;
+            max-height: 350px; /* Adjusted max height */
+             overflow-y: auto; padding: 0;
         }
         .leaflet-popup-content b.popup-title {
             font-size: 1.1em; color: var(--popup-title-color); font-weight: 600;
@@ -185,7 +241,13 @@
     <div class="disclaimer">
         Disclaimer: Represents a snapshot. Landscape is dynamic. Developed by ronald.marquez@udg.edu / Powered by Gemini 2.5
     </div>
-    <div id="map"></div>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search for institution...">
+        <button id="search-button">Search</button>
+    </div>
+    <div id="search-message"></div> <div id="map"></div>
+
     <div class="legend">
         <h4>Legend</h4>
         <div><img src="https://placehold.co/32x32/2196F3/FFFFFF?text=UNI&font=lato" alt="University Icon" class="legend-icon"> University</div>
@@ -254,7 +316,7 @@
         };
 
 
-        // --- Comprehensive Data Source (Unchanged) ---
+        // --- Comprehensive Data Source (UPDATED Stockholm University) ---
         const entitiesData = [
              // UK Universities
             { name: "University of Cambridge", type: "University", city: "Cambridge", country: "UK", lat: 52.20, lon: 0.12, focus: ["Materials Science", "Nanotech"], keyInfo: "#1 Materials Science Europe, #1 Nanotech UK.", iconType: 'university' },
@@ -299,7 +361,8 @@
             { name: "Chalmers University of Technology", type: "University", city: "Gothenburg", country: "SE", lat: 57.69, lon: 11.97, focus: ["Nanotech", "Materials Engineering"], keyInfo: "#3 Nanotech SE. MSc Nanotechnology, Materials Engineering.", iconType: 'university' },
             { name: "Lund University", type: "University", city: "Lund", country: "SE", lat: 55.71, lon: 13.20, focus: ["Nanotech"], keyInfo: "#4 Nanotech SE.", iconType: 'university' },
             { name: "Luleå University of Technology (LTU)", type: "University", city: "Luleå", country: "SE", lat: 65.61, lon: 22.14, focus: ["Lignin", "Wood Chemistry", "Biomass Processing"], keyInfo: "BIOMAC partner (PL1). Research on lignin extraction.", iconType: 'university' },
-            { name: "Stockholm University", type: "University", city: "Stockholm", country: "SE", lat: 59.34889, lon: 18.07424, focus: ["Lignin Chemistry", "Natural Sciences"], keyInfo: "Major Swedish university.", iconType: 'university' }, // ADDED
+            // UPDATED Stockholm University Entry
+            { name: "Stockholm University - Dept. of Chemistry", type: "University", city: "Stockholm", country: "SE", lat: 59.3668831, lon: 18.0596599, focus: ["Chemistry", "Materials", "Natural Sciences"], keyInfo: "Major Swedish university, specific focus in Chemistry Dept.", iconType: 'university' },
             { name: "RISE Research Institutes of Sweden", type: "Institute", city: "Stockholm / Örnsköldsvik / etc.", country: "SE", lat: 59.33, lon: 18.06, focus: ["Lignin", "Cellulose (CNF/CNC)"], keyInfo: "LignoBoost/LignoDemo. Nanocellulose pilot plants (MFC/CNC). BIOMAC (PL2).", iconType: 'institute' },
             { name: "RISE Processum", type: "Institute", city: "Örnsköldsvik", country: "SE", lat: 63.29, lon: 18.71, focus: ["Biorefinery"], keyInfo: "Biorefinery R&D. BIOMAC partner.", iconType: 'institute' },
             { name: "LignoCity", type: "Pilot Plant", city: "Bäckhammar", country: "SE", lat: 59.16, lon: 14.13, focus: ["Lignin"], keyInfo: "Open testbed for lignin valorization. Hosts RISE & Lixea pilot.", iconType: 'pilot_plant' },
@@ -508,19 +571,27 @@
             { name: "ZCPP SR (Assoc. Slovak Pulp & Paper Ind.)", type: "Network", city: "Bratislava?", country: "SK", lat: 48.15, lon: 17.11, focus: ["Industry Association"], keyInfo: "National CEPI member.", iconType: 'network' },
         ];
 
-        // --- Data Processing & Merging (Optional Deduplication) ---
+        // --- Data Processing & Merging ---
+        // Use a map to store entities for efficient lookup and deduplication
         const combinedEntitiesMap = new Map();
+        // Function to generate a unique key for each entity
         const getEntityKey = entity => `${entity.name.toLowerCase().trim()}_${entity.city.toLowerCase().trim()}_${entity.type.toLowerCase().trim()}`;
+
         entitiesData.forEach(entity => {
             if (entity && entity.name && entity.city && entity.type) {
-                 combinedEntitiesMap.set(getEntityKey(entity), entity);
+                 const key = getEntityKey(entity);
+                 // Add a unique key property to the entity object itself for later reference
+                 entity.uniqueKey = key;
+                 combinedEntitiesMap.set(key, entity);
             } else {
                 console.warn("Skipping entity due to missing key component:", entity);
             }
         });
+        // Final array of unique entities
         const finalEntities = Array.from(combinedEntitiesMap.values());
 
         // --- Marker and Layer Creation ---
+        // Marker cluster group
         const markers = L.markerClusterGroup({
             maxClusterRadius: 55, spiderfyOnMaxZoom: true, showCoverageOnHover: false, zoomToBoundsOnClick: true,
             iconCreateFunction: function(cluster) { // Custom cluster icons
@@ -532,12 +603,15 @@
                 return L.divIcon({ html: `<div><span>${count}</span></div>`, className: className, iconSize: L.point(40, 40) });
             }
         });
+        // Layer groups for filtering
         const layers = {
             university: L.layerGroup(), institute: L.layerGroup(), company: L.layerGroup(),
             pilot_plant: L.layerGroup(), network: L.layerGroup(), other: L.layerGroup()
         };
+        // Object to store marker references, keyed by the entity's uniqueKey
+        const markerRefs = {};
 
-        // Function to create the HTML content for the popups (Modernized Style)
+        // Function to create the HTML content for the popups
         const createPopupContent = entity => `
             <b class="popup-title">${entity.name}</b>
             <div class="popup-section">
@@ -556,7 +630,7 @@
                  <a href="https://www.google.com/search?q=${encodeURIComponent(entity.name + ' ' + entity.city + ' ' + entity.country)}" target="_blank" rel="noopener noreferrer">Search Online &rarr;</a>
             </div>`;
 
-        // Loop through each entity in the final data array
+        // Loop through each entity to create markers and layers
         finalEntities.forEach(entity => {
             if (typeof entity.lat !== 'number' || typeof entity.lon !== 'number' || isNaN(entity.lat) || isNaN(entity.lon)) {
                 console.warn("Skipping entity due to invalid or missing coordinates:", entity);
@@ -564,13 +638,13 @@
             }
             const iconType = entity.iconType || 'other';
             const marker = L.marker([entity.lat, entity.lon], {
-                icon: icons[iconType] || icons.other, // Use specific square icon or default
+                icon: icons[iconType] || icons.other,
                 alt: entity.name
             })
             .bindPopup(createPopupContent(entity), { maxWidth: 380 })
             .bindTooltip(entity.name);
 
-            // Add hover effect for square icons
+            // Add hover effect
             marker.on('mouseover', function (e) {
                 const element = this.getElement();
                 if (element) element.classList.add('marker-hover');
@@ -580,8 +654,13 @@
                  if (element) element.classList.remove('marker-hover');
             });
 
+            // Add marker to the correct layer group
             const targetLayer = layers[iconType] || layers.other;
             targetLayer.addLayer(marker);
+
+            // Store a reference to the marker using the entity's unique key
+            markerRefs[entity.uniqueKey] = marker;
+
             // Add marker to the cluster group (except for networks)
             if (iconType !== 'network') {
                 markers.addLayer(marker);
@@ -592,9 +671,8 @@
 
         // Add the marker cluster group to the map
         if (markers.getLayers().length > 0) { markers.addTo(map); }
-        // Add individual layers (except networks if added directly)
+        // Add individual layers (only if they contain markers and weren't added directly)
         Object.keys(layers).forEach(key => {
-            // Add layer if it's not 'network' OR if it is 'network' but wasn't added directly above
             if (key !== 'network' || layers[key].getLayers().length > 0) {
                  layers[key].addTo(map);
             }
@@ -603,7 +681,6 @@
 
         // --- Map Controls ---
         const baseMaps = { "Carto Positron": cartoPositron, "OpenStreetMap": osmTile, "Stamen Toner Lite": stamenTonerLite };
-        // Define overlay map options using square icons with MODERN colors
         const overlayMaps = {
             [`<img src="${icons.university.options.iconUrl}" alt="UNI" class="layer-control-icon"><span> Universities (${layers.university.getLayers().length})</span>`]: layers.university,
             [`<img src="${icons.institute.options.iconUrl}" alt="INST" class="layer-control-icon"><span> Institutes/RTOs (${layers.institute.getLayers().length})</span>`]: layers.institute,
@@ -628,8 +705,88 @@
         });
         new L.Control.Recenter().addTo(map);
 
+        // --- Search Functionality ---
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const searchMessage = document.getElementById('search-message');
+
+        function performSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            searchMessage.textContent = ''; // Clear previous messages
+
+            if (!query) {
+                searchMessage.textContent = 'Please enter a search term.';
+                return;
+            }
+
+            let foundEntity = null;
+            // Find the first entity whose name contains the query (case-insensitive)
+            for (const entity of finalEntities) {
+                if (entity.name.toLowerCase().includes(query)) {
+                    foundEntity = entity;
+                    break; // Stop at the first match
+                }
+            }
+
+            if (foundEntity) {
+                const foundMarker = markerRefs[foundEntity.uniqueKey];
+                if (foundMarker) {
+                    // Function to open popup after zooming/panning
+                    const openPopupAfterZoom = () => {
+                        foundMarker.openPopup();
+                        // Remove the event listener after it fires once
+                        map.off('moveend', openPopupAfterZoom);
+                        map.off('zoomend', openPopupAfterZoom);
+                    };
+
+                    // Check if the marker is in a cluster group
+                    const isClustered = markers.hasLayer(foundMarker);
+
+                    if (isClustered) {
+                        // If clustered, zoom to reveal the marker first
+                        markers.zoomToShowLayer(foundMarker, () => {
+                            // Once zoomed, fly to the exact location and open popup
+                            map.flyTo(foundMarker.getLatLng(), 15, { // Zoom level 15
+                                animate: true,
+                                duration: 0.8
+                            });
+                             // Add listener to open popup *after* flyTo animation finishes
+                            map.once('moveend', openPopupAfterZoom);
+                            map.once('zoomend', openPopupAfterZoom);
+                        });
+                    } else {
+                        // If not clustered, just fly to the marker
+                        map.flyTo(foundMarker.getLatLng(), 15, { // Zoom level 15
+                             animate: true,
+                             duration: 0.8
+                        });
+                        // Add listener to open popup *after* flyTo animation finishes
+                        map.once('moveend', openPopupAfterZoom);
+                        map.once('zoomend', openPopupAfterZoom);
+                    }
+                     searchMessage.textContent = `Found: ${foundEntity.name}`;
+                } else {
+                     searchMessage.textContent = 'Marker reference not found for the entity.';
+                     console.error("Could not find marker reference for:", foundEntity);
+                }
+            } else {
+                searchMessage.textContent = 'No matching institution found.';
+            }
+        }
+
+        // Trigger search on button click
+        searchButton.addEventListener('click', performSearch);
+
+        // Optional: Trigger search on Enter key press in the input field
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
     </script>
 </body>
 </html>
+
 
 
